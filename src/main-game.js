@@ -1,48 +1,29 @@
 import { Game, AUTO } from 'phaser';
 
-import circle from '../assets/circle.svg';
+import TestScene from './test-scene.js'
 
-import style from '../style/default.css';
 
-function preload ()
-{
-    this.load.image('circle', circle);
-}
-
-function create ()
-{
-    console.log("create")
-    var circle = this.add.image(100, 100, 'circle');
-
-    this.tweens.add({
-        targets: circle,
-        y: 450,
-        duration: 2000,
-        ease: 'Power2',
-        yoyo: true,
-        loop: -1
-    });
-
-}
 const config = {
     type: AUTO,
-//    parent: 'phaser-example',
     width: 800,
     height: 600,
-    scene: {
-        preload: preload,
-        create: create
-    }
+    physics: {
+        default: 'arcade',
+        arcade: {
+            gravity: { y: 1000 },
+            debug: true
+        }
+    },
+    scene: [
+        TestScene
+    ]
 };
 
-export class MainGame {
+export class MainGame extends Game {
     constructor() {
-        var game = new Game(config);
-        console.log("test")
+        super(config)
     }
-
 }
-
 
 
 export default MainGame;
