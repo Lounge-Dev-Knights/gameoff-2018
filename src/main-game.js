@@ -8,9 +8,9 @@ const config = {
     width: 800,
     height: 600,
     physics: {
-        default: 'arcade',
-        arcade: {
-            gravity: { y: 1000 },
+        default: 'matter',
+        matter: {
+            //gravity: { y: 1000 },
             debug: true
         }
     },
