@@ -1,7 +1,7 @@
 
-import { Scene, GameObjects } from 'phaser';
+import { Scene, GameObjects, Matter } from 'phaser';
 
-//import circle from '../assets/circle.svg';
+import blazerMan from '../assets/BackupBlazerstories/mainC.png';
 
 import style from '../style/default.css';
 
@@ -18,6 +18,7 @@ class TestScene extends Scene {
     }
     
     preload () {
+        this.load.image('blazerMan', blazerMan)
         //this.player.body.
         //this.load.image('circle', circle);
     }
@@ -26,13 +27,31 @@ class TestScene extends Scene {
     create () {
 
         this.matter.world.setBounds(0,0,800,600)
-        console.log(this.matter)
-        this.circle = this.matter.add.circle(50, 200, 20, {})
+
+        this.character = this.matter.add.image(50, 200, 'blazerMan')
+        this.character.setMass(20)
+        console.log(this.character)
+
+        this.input.keyboard.on("keydown_SPACE", () => {
+            this.character.setAngularVelocity(1)
+        })
+        this.input.keyboard.on("keydown_LEFT", () => {
+            this.character.setFlipX(true)
+            this.character.applyForce({x: -1, y: -1})
+        })
+        this.input.keyboard.on("keydown_RIGHT", () => {
+            this.character.setFlipX(false)
+            this.character.applyForce({x: 1, y: -1})
+        })
+        this.input.keyboard.on("keydown_UP", () => {
+            this.character.setScale(2)
+        })
+        this.input.keyboard.on("keydown_DOWN", () => {
+            this.character.setScale(1)
+        })
+
         
-        const trapezoid = this.matter.add.trapezoid(50, 50, 20, 20, 5)
-        this.matter.add.mouseSpring()
         //circle.setPosition(0,0)
-        console.log(this.circle)
         //this.input.on("pointermove", (pointer) => {
         //    //this.matter.add.circle(pointer.x, pointer.y, 20)
         //    console.log("click")
