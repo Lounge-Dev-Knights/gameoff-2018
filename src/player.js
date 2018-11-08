@@ -1,3 +1,4 @@
+
 class Player {
   constructor(keyJump, keyLeft, keyRight, Sprite, Mass, Speed, posX, posY, velocityX, velocityY){
     this.keyJump = keyJump;
@@ -9,10 +10,10 @@ class Player {
     this.posX = posX;
     this.posY = posY;
     this.velocityX = velocityX;
-    this.velocityY = velocityY;   
+    this.velocityY = velocityY;
   }
   moveLeft(){
-  //return this.velocityX = -this.Speed   //still thinking what to do with moveLeft()
+  this.posX = this.posX + this.VelocityX
   }
-  
+
 }
