@@ -25,29 +25,54 @@ class TestScene extends Scene {
 
 
     create () {
+        console.log(this.matter)
+        const gameHeight = 10000;
+        const y = gameHeight - 100
+        this.matter.world.setBounds(0, 0, 800, gameHeight)
+        for (let i = gameHeight; i < (gameHeight - 100); i -= 10) {
+            this.matter.add.circle(0, i, 5) 
+            this.matter.add.circle(800, i, 5) 
+        }
 
-        this.matter.world.setBounds(0,0,800,600)
-
-        this.character = this.matter.add.image(50, 200, 'blazerMan')
+        this.character = this.matter.add.image(50, y, 'blazerMan')
+        this.matter.scene.cameras.main.startFollow(this.character)
+        this.matter.add.image(200, y, 'blazerMan')
+            this.matter.add.circle(200, y, 5) 
+        //this.matter.add.circle(50, 500, 10)
         this.character.setMass(20)
         console.log(this.character)
 
+        this.input.keyboard.on("keydown_A", () => {
+            console.log(this.character.getBounds(), this.matter.world)
+        })
         this.input.keyboard.on("keydown_SPACE", () => {
-            this.character.setAngularVelocity(1)
+            this.character.applyForce({x: 0, y: -1})
         })
         this.input.keyboard.on("keydown_LEFT", () => {
             this.character.setFlipX(true)
-            this.character.applyForce({x: -1, y: -1})
+            this.character.setVelocityX(-10)
         })
         this.input.keyboard.on("keydown_RIGHT", () => {
             this.character.setFlipX(false)
-            this.character.applyForce({x: 1, y: -1})
+            this.character.setVelocityX(10)
         })
         this.input.keyboard.on("keydown_UP", () => {
             this.character.setScale(2)
         })
         this.input.keyboard.on("keydown_DOWN", () => {
             this.character.setScale(1)
+        })
+
+        
+        this.matter.world.on('collisionstart', (event, bodyA, bodyB) => {
+            //console.log(event, bodyA, bodyB)
+            
+        })
+
+        this.matter.world.on('beforeUpdate', (event) => {
+            console.log(event)
+            //console.log(event, bodyA, bodyB)
+            
         })
 
         
@@ -141,6 +166,21 @@ class TestScene extends Scene {
 
     update() {
         //console.log(this.circle)
+        this.character.setAngle(0)
+        const y = this.character.y;
+        console.log(y)
+        
+        //this.world.bounds.min.y = 300 + character.bounds.min.y
+        //this.world.bounds.max.y = 300 + character.bounds.min.y + initialEngineBoundsMaxY
+
+        //this.matter.world.setBounds(0, y - 600, 800, 600)
+
+        //this.matter.world.setBounds(0, -400, 800, 1000)
+        const size = 1000;
+
+        //console.log(y)
+        //this.matter.world.setBounds(0,(size - y) + 400,800,size)
+
 
     }
 }
