@@ -73,21 +73,21 @@ class TestScene extends Scene {
 
         
 
-        for (let i = 0; i < 2; i++) {
-            const floor = this.matter.add.image(i * 800, gameHeight, 'boden')
-            floor.setCollisionCategory(catWalls);
-            floor.setStatic(true)
-        }
 
         for (let i = y + 52; i > 1000; i -= 52) {
             const left = this.matter.add.image(0, i, 'bamboo')
             left.setCollisionCategory(catWalls);
             left.setStatic(true)
 
-            const right = this.matter.add.image(800, i, 'blazerMan')
+            const right = this.matter.add.image(800, i, 'bamboo')
             right.setCollisionCategory(catWalls);
             right.setStatic(true)
             walls.push(right)
+        }
+        for (let i = 0; i < 2; i++) {
+            const floor = this.matter.add.image(i * 800, gameHeight, 'boden')
+            floor.setCollisionCategory(catWalls);
+            floor.setStatic(true)
         }
 
         this.ballSprite = this.matter.add.image(100, y - 400, ball)
