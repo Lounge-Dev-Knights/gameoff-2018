@@ -85,7 +85,8 @@ class TestScene extends Scene {
         this.character = this.matter.add.image(50, y, 'blazerMan')
         this.character.setCollisionCategory(catChars);
 
-        this.matter.scene.cameras.main.startFollow(this.character, true, 50, 50)
+        this.matter.scene.cameras.main.setBounds(0, 0, 800, gameHeight - 175)
+        this.matter.scene.cameras.main.startFollow(this.character, true, 0.99, 0.99)
         const walls = [];
 
         const secondMan = this.matter.add.image(200, y, 'blazerMan')
@@ -125,6 +126,7 @@ class TestScene extends Scene {
 
         this.input.keyboard.on("keydown_A", () => {
             console.log(this.character.getBounds(), this.matter.world)
+            console.log(this.matter.scene.cameras.main)
         })
         this.input.keyboard.on("keydown_SPACE", () => {
             this.character.applyForce({x: 0, y: -0.8})
@@ -165,8 +167,8 @@ class TestScene extends Scene {
     update() {
         this.character.setAngle(0)
         //this.background.
-        //console.log(this.background)
-        this.background.setPosition(this.character.x, this.character.y)
+        const cam = this.matter.scene.cameras.main
+        this.background.setPosition(400, cam._scrollY + 300)
 
         if (this.cursors.left.isDown) {
             this.character.setVelocityX(-5)
@@ -184,6 +186,12 @@ class TestScene extends Scene {
 
 
         this.clouds.forEach(cloud => {
+            if (cloud.cloud.x > 800) {
+                cloud.direction = -1
+            }
+            if (cloud.cloud.x < 0) {
+                cloud.direction = 1
+            }
             cloud.cloud.setVelocity(cloud.direction, 0)
 
         })
