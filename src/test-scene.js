@@ -26,17 +26,19 @@ class TestScene extends Scene {
 
     create () {
         console.log(this.matter)
-        const gameHeight = 10000;
+        const gameHeight = 100000;
         const y = gameHeight - 100
         this.matter.world.setBounds(0, 0, 800, gameHeight)
-        for (let i = gameHeight; i < (gameHeight - 100); i -= 10) {
-            this.matter.add.circle(0, i, 5) 
-            this.matter.add.circle(800, i, 5) 
-        }
 
         this.character = this.matter.add.image(50, y, 'blazerMan')
         this.matter.scene.cameras.main.startFollow(this.character)
         this.matter.add.image(200, y, 'blazerMan')
+        for (let i = y; i > 1000; i -= 100) {
+            const left = this.matter.add.image(0, i, 'blazerMan') 
+            left.setStatic(true)
+            const right = this.matter.add.image(800, i, 'blazerMan') 
+            right.setStatic(true)
+        }
             this.matter.add.circle(200, y, 5) 
         //this.matter.add.circle(50, 500, 10)
         this.character.setMass(20)
@@ -168,7 +170,7 @@ class TestScene extends Scene {
         //console.log(this.circle)
         this.character.setAngle(0)
         const y = this.character.y;
-        console.log(y)
+        //console.log(y)
         
         //this.world.bounds.min.y = 300 + character.bounds.min.y
         //this.world.bounds.max.y = 300 + character.bounds.min.y + initialEngineBoundsMaxY
