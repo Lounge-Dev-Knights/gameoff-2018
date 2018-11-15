@@ -3,6 +3,8 @@ import { Scene, GameObjects, Matter } from 'phaser';
 
 import blazerMan from '../assets/BackupBlazerstories/mainC.png';
 import ball from '../assets/BounceNBounce/powerups/02powup.png';
+import background from '../assets/backG.png';
+import boden from '../assets/boden.png';
 
 
 import style from '../style/default.css';
@@ -29,6 +31,8 @@ class TestScene extends Scene {
     preload () {
         this.load.image('blazerMan', blazerMan)
         this.load.image('ball', ball)
+        this.load.image('background', background)
+        this.load.image('boden', boden)
 
         //this.player.body.
         //this.load.image('circle', circle);
@@ -39,15 +43,21 @@ class TestScene extends Scene {
         var catChars = this.matter.world.nextCategory();
         var catWalls = this.matter.world.nextCategory();
         var catBalls = this.matter.world.nextCategory();
+        var catBackground = this.matter.world.nextCategory();
+
 
 
 
         this.cursors = this.input.keyboard.createCursorKeys()
 
         console.log(this.matter)
-        const gameHeight = 100000;
+        const gameHeight = 10000;
         const y = gameHeight - 100
         this.matter.world.setBounds(0, 0, 800, gameHeight)
+
+        // set background
+        this.background = this.matter.scene.add.image(0, gameHeight, 'background')
+    //this.background.setCollisionCategory(catBackground)
 
         this.character = this.matter.add.image(50, y, 'blazerMan')
         this.character.setCollisionCategory(catChars);
@@ -60,11 +70,13 @@ class TestScene extends Scene {
 
 
         
-        for (let i = 0; i < 800; i += 20) {
-            const floor = this.matter.add.image(i, gameHeight, 'blazerMan')
+
+        for (let i = 0; i < 2; i++) {
+            const floor = this.matter.add.image(i * 800, gameHeight, 'boden')
             floor.setCollisionCategory(catWalls);
             floor.setStatic(true)
         }
+
         for (let i = y + 50; i > 1000; i -= 80) {
             const left = this.matter.add.image(0, i, 'blazerMan')
             left.setCollisionCategory(catWalls);
@@ -113,7 +125,8 @@ class TestScene extends Scene {
         //setup collision
 
         this.character.setCollidesWith([ catWalls, catChars, catBalls]);
-        //this.ballSprite.setCollidesWith([catBalls, catChars]);
+        this.ballSprite.setCollidesWith([catWalls, catBalls, catChars]);
+
         this.matter.world.on('collisionstart', function (event) {
 
         })
@@ -121,10 +134,14 @@ class TestScene extends Scene {
 
         scoreText = this.add.text(32, 24, scoreString + score);
         scoreText.visible = true;
+        console.log(this.background)
     }
 
     update() {
         this.character.setAngle(0)
+        //this.background.
+        //console.log(this.background)
+        this.background.setPosition(this.character.x, this.character.y)
 
         if (this.cursors.left.isDown) {
             this.character.setVelocityX(-5)
