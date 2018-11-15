@@ -5,6 +5,10 @@ import blazerMan from '../assets/BackupBlazerstories/mainC.png';
 
 import style from '../style/default.css';
 
+var score = 0;
+var scoreString = "Score: ";
+var scoreText;
+
 
 
 
@@ -16,7 +20,7 @@ class TestScene extends Scene {
             key: "TestScene"
         })
     }
-    
+
     preload () {
         this.load.image('blazerMan', blazerMan)
         //this.player.body.
@@ -31,15 +35,17 @@ class TestScene extends Scene {
         this.matter.world.setBounds(0, 0, 800, gameHeight)
 
         this.character = this.matter.add.image(50, y, 'blazerMan')
+        var cat1 = this.matter.world.nextCategory();
+        this.character.setCollisionCategory(cat1);
         this.matter.scene.cameras.main.startFollow(this.character)
         this.matter.add.image(200, y, 'blazerMan')
         for (let i = y; i > 1000; i -= 100) {
-            const left = this.matter.add.image(0, i, 'blazerMan') 
+            const left = this.matter.add.image(0, i, 'blazerMan')
             left.setStatic(true)
-            const right = this.matter.add.image(800, i, 'blazerMan') 
+            const right = this.matter.add.image(800, i, 'blazerMan')
             right.setStatic(true)
         }
-            this.matter.add.circle(200, y, 5) 
+            this.matter.add.circle(200, y, 5)
         //this.matter.add.circle(50, 500, 10)
         this.character.setMass(20)
         console.log(this.character)
@@ -65,19 +71,21 @@ class TestScene extends Scene {
             this.character.setScale(1)
         })
 
-        
+
         this.matter.world.on('collisionstart', (event, bodyA, bodyB) => {
             //console.log(event, bodyA, bodyB)
-            
+
         })
 
         this.matter.world.on('beforeUpdate', (event) => {
             console.log(event)
             //console.log(event, bodyA, bodyB)
-            
+
         })
 
-        
+        this.matter.world.on('collisionstart', function (event) {
+
+        })
         //circle.setPosition(0,0)
         //this.input.on("pointermove", (pointer) => {
         //    //this.matter.add.circle(pointer.x, pointer.y, 20)
@@ -112,17 +120,17 @@ class TestScene extends Scene {
 
 //      //  this.matter.add.collider(elements, walls)
         ////this.matter.add.collider(this.player, walls, (player, wall) => {
-        ////    
+        ////
         ////    //wall.body.setFriction(1, 1)
         ////    const wallVelocity = 100;
         ////    if (player.body.touching.left) {
         ////        console.log("touching left")
         ////        this.player.body.setVelocity(-1, wallVelocity)
-        ////    } 
+        ////    }
         ////    if (player.body.touching.right) {
         ////        console.log("touching right")
         ////        this.player.body.setVelocity(1, wallVelocity)
-        ////    } 
+        ////    }
         ////})
         ////this.matter.add.collider(elements, elements)
         ////this.matter.add.collider(walls, elements)
@@ -163,7 +171,8 @@ class TestScene extends Scene {
         ////    }
         ////})
 
-
+        scoreText = this.add.text(32, 24, scoreString + score);
+            scoreText.visible = true;
     }
 
     update() {
@@ -171,7 +180,7 @@ class TestScene extends Scene {
         this.character.setAngle(0)
         const y = this.character.y;
         //console.log(y)
-        
+
         //this.world.bounds.min.y = 300 + character.bounds.min.y
         //this.world.bounds.max.y = 300 + character.bounds.min.y + initialEngineBoundsMaxY
 
