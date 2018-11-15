@@ -35,15 +35,14 @@ class TestScene extends Scene {
     }
 
     create () {
-<<<<<<< HEAD
+
         var catChars = this.matter.world.nextCategory();
         var catWalls = this.matter.world.nextCategory();
 
 
 
-=======
         this.cursors = this.input.keyboard.createCursorKeys()
->>>>>>> 28a617cc90f1c8eb73a392451b21684d994fff5d
+
         console.log(this.matter)
         const gameHeight = 100000;
         const y = gameHeight - 100
@@ -55,14 +54,9 @@ class TestScene extends Scene {
         this.matter.scene.cameras.main.startFollow(this.character)
         const walls = [];
         this.matter.add.image(200, y, 'blazerMan')
-<<<<<<< HEAD
-        for (let i = y; i > 1000; i -= 100) {
+        for (let i = y + 50; i > 1000; i -= 80) {
             const left = this.matter.add.image(0, i, 'blazerMan')
             left.setCollisionCategory(catWalls);
-=======
-        for (let i = y + 50; i > 1000; i -= 80) {
-            const left = this.matter.add.image(0, i, 'blazerMan') 
->>>>>>> 28a617cc90f1c8eb73a392451b21684d994fff5d
             left.setStatic(true)
 
             const right = this.matter.add.image(800, i, 'blazerMan')
