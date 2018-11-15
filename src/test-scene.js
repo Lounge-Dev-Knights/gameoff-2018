@@ -35,8 +35,8 @@ class TestScene extends Scene {
         this.matter.world.setBounds(0, 0, 800, gameHeight)
 
         this.character = this.matter.add.image(50, y, 'blazerMan')
-        var cat1 = this.matter.world.nextCategory();
-        this.character.setCollisionCategory(cat1);
+
+
         this.matter.scene.cameras.main.startFollow(this.character)
         this.matter.add.image(200, y, 'blazerMan')
         for (let i = y; i > 1000; i -= 100) {
@@ -83,9 +83,13 @@ class TestScene extends Scene {
 
         })
 
+//setup collision
+        var cat1 = this.matter.world.nextCategory();
+        this.character.setCollisionCategory(cat1);
         this.matter.world.on('collisionstart', function (event) {
 
         })
+
         //circle.setPosition(0,0)
         //this.input.on("pointermove", (pointer) => {
         //    //this.matter.add.circle(pointer.x, pointer.y, 20)
