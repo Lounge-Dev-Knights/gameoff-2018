@@ -29,21 +29,31 @@ class TestScene extends Scene {
 
 
     create () {
+        var catChars = this.matter.world.nextCategory();
+        var catWalls = this.matter.world.nextCategory();
+
+
+
         console.log(this.matter)
         const gameHeight = 100000;
         const y = gameHeight - 100
         this.matter.world.setBounds(0, 0, 800, gameHeight)
 
         this.character = this.matter.add.image(50, y, 'blazerMan')
-
+        this.character.setCollisionCategory(catChars);
 
         this.matter.scene.cameras.main.startFollow(this.character)
+        const walls = [];
         this.matter.add.image(200, y, 'blazerMan')
         for (let i = y; i > 1000; i -= 100) {
             const left = this.matter.add.image(0, i, 'blazerMan')
+            left.setCollisionCategory(catWalls);
             left.setStatic(true)
+
             const right = this.matter.add.image(800, i, 'blazerMan')
+            right.setCollisionCategory(catWalls);
             right.setStatic(true)
+            walls.push(right)
         }
             this.matter.add.circle(200, y, 5)
         //this.matter.add.circle(50, 500, 10)
@@ -84,8 +94,8 @@ class TestScene extends Scene {
         })
 
 //setup collision
-        var cat1 = this.matter.world.nextCategory();
-        this.character.setCollisionCategory(cat1);
+
+        this.character.setCollidesWith([ catWalls, catChars ]);
         this.matter.world.on('collisionstart', function (event) {
 
         })
