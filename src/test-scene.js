@@ -2,6 +2,8 @@
 import { Scene, GameObjects, Matter } from 'phaser';
 
 import blazerMan from '../assets/BackupBlazerstories/mainC.png';
+import ball from '../assets/BounceNBounce/powerups/02powup.png';
+
 
 import style from '../style/default.css';
 
@@ -15,16 +17,21 @@ class TestScene extends Scene {
         super({
             key: "TestScene"
         })
+
+
+
     }
     
     preload () {
         this.load.image('blazerMan', blazerMan)
+        this.load.image('ball', ball)
+
         //this.player.body.
         //this.load.image('circle', circle);
     }
 
-
     create () {
+        this.cursors = this.input.keyboard.createCursorKeys()
         console.log(this.matter)
         const gameHeight = 100000;
         const y = gameHeight - 100
@@ -33,15 +40,16 @@ class TestScene extends Scene {
         this.character = this.matter.add.image(50, y, 'blazerMan')
         this.matter.scene.cameras.main.startFollow(this.character)
         this.matter.add.image(200, y, 'blazerMan')
-        for (let i = y; i > 1000; i -= 100) {
+        for (let i = y + 50; i > 1000; i -= 80) {
             const left = this.matter.add.image(0, i, 'blazerMan') 
             left.setStatic(true)
             const right = this.matter.add.image(800, i, 'blazerMan') 
             right.setStatic(true)
         }
-        this.matter.add.circle(300, y, 5, {
-            strokeStyle: 'red'
-        }) 
+        this.ballSprite = this.matter.add.image(100, y - 400, ball)
+        const bounceFactor = .8
+        this.ballSprite.setBounce(bounceFactor,bounceFactor)
+        console.log(this.ballSprite)
         //this.matter.add.circle(50, 500, 10)
         this.character.setMass(20)
         console.log(this.character)
@@ -50,15 +58,7 @@ class TestScene extends Scene {
             console.log(this.character.getBounds(), this.matter.world)
         })
         this.input.keyboard.on("keydown_SPACE", () => {
-            this.character.applyForce({x: 0, y: -1})
-        })
-        this.input.keyboard.on("keydown_LEFT", () => {
-            this.character.setFlipX(true)
-            this.character.setVelocityX(-10)
-        })
-        this.input.keyboard.on("keydown_RIGHT", () => {
-            this.character.setFlipX(false)
-            this.character.setVelocityX(10)
+            this.character.applyForce({x: 0, y: -0.8})
         })
         //this.input.keyboard.on("keydown_UP", () => {
         //    this.character.setScale(2)
@@ -86,7 +86,29 @@ class TestScene extends Scene {
 
     update() {
         this.character.setAngle(0)
+        //this.ballSprite.setVelocityY(-1)
 
+        if (this.cursors.left.isDown) {
+            this.character.setVelocityX(-5)
+            this.character.setFlipX(true)
+        }
+        if (this.cursors.right.isDown) {
+            this.character.setVelocityX(5)
+            this.character.setFlipX(false)
+        }
+        if (this.cursors.up.isDown) {
+        }
+        if (this.cursors.down.isDown) {
+        }
+        //ballSprite.setAcceleration({y: -1})
+        //this.input.keyboard.on("keydown_LEFT", () => {
+        //    this.character.setFlipX(true)
+        //    this.character.setVelocityX(-10)
+        //})
+        //this.input.keyboard.on("keydown_RIGHT", () => {
+        //    this.character.setFlipX(false)
+        //    this.character.setVelocityX(10)
+        //})
     }
 }
 

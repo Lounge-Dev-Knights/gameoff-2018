@@ -10,7 +10,7 @@ const config = {
     physics: {
         default: 'matter',
         matter: {
-            //gravity: { y:  }
+            gravity: { y: .5 }
             //debug: true
         }
     },
