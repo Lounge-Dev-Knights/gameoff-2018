@@ -5,6 +5,7 @@ import blazerMan from '../assets/BackupBlazerstories/mainC.png';
 import ball from '../assets/BounceNBounce/powerups/02powup.png';
 import background from '../assets/backG.png';
 import boden from '../assets/boden.png';
+import bamboo from '../assets/bamboo.png';
 
 
 import style from '../style/default.css';
@@ -33,6 +34,7 @@ class TestScene extends Scene {
         this.load.image('ball', ball)
         this.load.image('background', background)
         this.load.image('boden', boden)
+        this.load.image('bamboo', bamboo)
 
         //this.player.body.
         //this.load.image('circle', circle);
@@ -77,8 +79,8 @@ class TestScene extends Scene {
             floor.setStatic(true)
         }
 
-        for (let i = y + 50; i > 1000; i -= 80) {
-            const left = this.matter.add.image(0, i, 'blazerMan')
+        for (let i = y + 52; i > 1000; i -= 52) {
+            const left = this.matter.add.image(0, i, 'bamboo')
             left.setCollisionCategory(catWalls);
             left.setStatic(true)
 
