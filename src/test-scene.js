@@ -6,6 +6,7 @@ import ball from '../assets/BounceNBounce/powerups/02powup.png';
 import background from '../assets/backG.png';
 import boden from '../assets/boden.png';
 import bamboo from '../assets/bamboo.png';
+import house from '../assets/house.png';
 
 
 import style from '../style/default.css';
@@ -35,6 +36,7 @@ class TestScene extends Scene {
         this.load.image('background', background)
         this.load.image('boden', boden)
         this.load.image('bamboo', bamboo)
+        this.load.image('house', house)
 
         //this.player.body.
         //this.load.image('circle', circle);
@@ -84,6 +86,9 @@ class TestScene extends Scene {
             right.setStatic(true)
             walls.push(right)
         }
+        const houseSprite = this.matter.add.image(400, gameHeight - 340, 'house')
+        houseSprite.setCollisionCategory(catBackground);
+        houseSprite.setStatic(true)
         for (let i = 0; i < 2; i++) {
             const floor = this.matter.add.image(i * 800, gameHeight, 'boden')
             floor.setCollisionCategory(catWalls);
