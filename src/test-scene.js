@@ -38,6 +38,7 @@ class TestScene extends Scene {
 
         var catChars = this.matter.world.nextCategory();
         var catWalls = this.matter.world.nextCategory();
+        var catBalls = this.matter.world.nextCategory();
 
 
 
@@ -51,9 +52,19 @@ class TestScene extends Scene {
         this.character = this.matter.add.image(50, y, 'blazerMan')
         this.character.setCollisionCategory(catChars);
 
-        this.matter.scene.cameras.main.startFollow(this.character)
+        this.matter.scene.cameras.main.startFollow(this.character, true, 50, 50)
         const walls = [];
-        this.matter.add.image(200, y, 'blazerMan')
+
+        const secondMan = this.matter.add.image(200, y, 'blazerMan')
+        secondMan.setCollisionCategory(catChars)
+
+
+        
+        for (let i = 0; i < 800; i += 20) {
+            const floor = this.matter.add.image(i, gameHeight, 'blazerMan')
+            floor.setCollisionCategory(catWalls);
+            floor.setStatic(true)
+        }
         for (let i = y + 50; i > 1000; i -= 80) {
             const left = this.matter.add.image(0, i, 'blazerMan')
             left.setCollisionCategory(catWalls);
@@ -64,9 +75,11 @@ class TestScene extends Scene {
             right.setStatic(true)
             walls.push(right)
         }
+
         this.ballSprite = this.matter.add.image(100, y - 400, ball)
         const bounceFactor = .8
         this.ballSprite.setBounce(bounceFactor,bounceFactor)
+        this.ballSprite.setCollisionCategory(catBalls)
         console.log(this.ballSprite)
         //this.matter.add.circle(50, 500, 10)
         this.character.setMass(20)
@@ -97,16 +110,17 @@ class TestScene extends Scene {
 
         })
 
-//setup collision
+        //setup collision
 
-        this.character.setCollidesWith([ catWalls, catChars ]);
+        this.character.setCollidesWith([ catWalls, catChars, catBalls]);
+        //this.ballSprite.setCollidesWith([catBalls, catChars]);
         this.matter.world.on('collisionstart', function (event) {
 
         })
 
 
         scoreText = this.add.text(32, 24, scoreString + score);
-            scoreText.visible = true;
+        scoreText.visible = true;
     }
 
     update() {
