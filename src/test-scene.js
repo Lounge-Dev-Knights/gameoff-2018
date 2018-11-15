@@ -7,6 +7,10 @@ import background from '../assets/backG.png';
 import boden from '../assets/boden.png';
 import bamboo from '../assets/bamboo.png';
 import house from '../assets/house.png';
+import w1 from '../assets/w1.png';
+import w2 from '../assets/w2.png';
+import w3 from '../assets/w3.png';
+import w4 from '../assets/w4.png';
 
 
 import style from '../style/default.css';
@@ -21,13 +25,9 @@ var scoreText;
 class TestScene extends Scene {
 
     constructor() {
-
         super({
             key: "TestScene"
         })
-
-
-
     }
 
     preload () {
@@ -37,6 +37,10 @@ class TestScene extends Scene {
         this.load.image('boden', boden)
         this.load.image('bamboo', bamboo)
         this.load.image('house', house)
+        this.load.image('w1', w1)
+        this.load.image('w2', w2)
+        this.load.image('w3', w3)
+        this.load.image('w3', w3)
 
         //this.player.body.
         //this.load.image('circle', circle);
@@ -59,9 +63,24 @@ class TestScene extends Scene {
         const y = gameHeight - 100
         this.matter.world.setBounds(0, 0, 800, gameHeight)
 
+
         // set background
         this.background = this.matter.scene.add.image(0, gameHeight, 'background')
+        // clouds
+        this.clouds = []
+
+        for (let i = y - (Math.random() * 1000); i > 1000; i -= (Math.random() * 1000)) {
+            const cloud = this.matter.add.image((Math.random() * 1600) - 800, i, 'w' + Math.ceil((Math.random() * 3)))
+            cloud.setIgnoreGravity(true)
+            cloud.setCollidesWith([])
+            this.clouds.push({
+                cloud: cloud,
+                direction: (Math.ceil(i) % 3) - 1
+            })
+        }
+
     //this.background.setCollisionCategory(catBackground)
+
 
         this.character = this.matter.add.image(50, y, 'blazerMan')
         this.character.setCollisionCategory(catChars);
@@ -74,7 +93,7 @@ class TestScene extends Scene {
 
 
         
-
+            
 
         for (let i = y + 52; i > 1000; i -= 52) {
             const left = this.matter.add.image(0, i, 'bamboo')
@@ -129,8 +148,7 @@ class TestScene extends Scene {
 
         })
 
-        //setup collision
-
+        //setup collision 
         this.character.setCollidesWith([ catWalls, catChars, catBalls]);
         this.ballSprite.setCollidesWith([catWalls, catBalls, catChars]);
 
@@ -162,6 +180,13 @@ class TestScene extends Scene {
         }
         if (this.cursors.down.isDown) {
         }
+
+
+
+        this.clouds.forEach(cloud => {
+            cloud.cloud.setVelocity(cloud.direction, 0)
+
+        })
     }
 }
 
