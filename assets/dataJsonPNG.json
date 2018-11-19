@@ -1,0 +1,356 @@
+{
+	"textures": [
+		{
+			"image": "dataJsonPNG.png",
+			"format": "RGBA8888",
+			"size": {
+				"w": 1462,
+				"h": 386
+			},
+			"scale": 1,
+			"frames": [
+				{
+					"filename": "scene/backgroundsEX",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 576,
+						"h": 384
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 576,
+						"h": 384
+					},
+					"frame": {
+						"x": 1,
+						"y": 1,
+						"w": 576,
+						"h": 384
+					}
+				},
+				{
+					"filename": "scene/verticalSpace",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 480,
+						"h": 270
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 480,
+						"h": 270
+					},
+					"frame": {
+						"x": 579,
+						"y": 1,
+						"w": 480,
+						"h": 270
+					}
+				},
+				{
+					"filename": "scene/gameBackground1",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 400,
+						"h": 300
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 400,
+						"h": 300
+					},
+					"frame": {
+						"x": 1061,
+						"y": 1,
+						"w": 400,
+						"h": 300
+					}
+				},
+				{
+					"filename": "powerups/powup06",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 51,
+						"h": 52
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 51,
+						"h": 52
+					},
+					"frame": {
+						"x": 579,
+						"y": 273,
+						"w": 51,
+						"h": 52
+					}
+				},
+				{
+					"filename": "powerups/powup03",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 51,
+						"h": 51
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 51,
+						"h": 51
+					},
+					"frame": {
+						"x": 632,
+						"y": 273,
+						"w": 51,
+						"h": 51
+					}
+				},
+				{
+					"filename": "powerups/powup05",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 51,
+						"h": 51
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 51,
+						"h": 51
+					},
+					"frame": {
+						"x": 685,
+						"y": 273,
+						"w": 51,
+						"h": 51
+					}
+				},
+				{
+					"filename": "powerups/powup01",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 50,
+						"h": 51
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 50,
+						"h": 51
+					},
+					"frame": {
+						"x": 738,
+						"y": 273,
+						"w": 50,
+						"h": 51
+					}
+				},
+				{
+					"filename": "powerups/powup02",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 50,
+						"h": 51
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 50,
+						"h": 51
+					},
+					"frame": {
+						"x": 790,
+						"y": 273,
+						"w": 50,
+						"h": 51
+					}
+				},
+				{
+					"filename": "powerups/powup04",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 50,
+						"h": 51
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 50,
+						"h": 51
+					},
+					"frame": {
+						"x": 842,
+						"y": 273,
+						"w": 50,
+						"h": 51
+					}
+				},
+				{
+					"filename": "characters/blazerMan",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 27,
+						"h": 64
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 27,
+						"h": 64
+					},
+					"frame": {
+						"x": 894,
+						"y": 273,
+						"w": 27,
+						"h": 64
+					}
+				},
+				{
+					"filename": "powerups/powup07",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 50,
+						"h": 51
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 50,
+						"h": 51
+					},
+					"frame": {
+						"x": 923,
+						"y": 273,
+						"w": 50,
+						"h": 51
+					}
+				},
+				{
+					"filename": "powerups/powup10",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 50,
+						"h": 51
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 50,
+						"h": 51
+					},
+					"frame": {
+						"x": 975,
+						"y": 273,
+						"w": 50,
+						"h": 51
+					}
+				},
+				{
+					"filename": "powerups/powup08",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 50,
+						"h": 50
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 50,
+						"h": 50
+					},
+					"frame": {
+						"x": 632,
+						"y": 326,
+						"w": 50,
+						"h": 50
+					}
+				},
+				{
+					"filename": "powerups/powup11",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 50,
+						"h": 50
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 50,
+						"h": 50
+					},
+					"frame": {
+						"x": 579,
+						"y": 327,
+						"w": 50,
+						"h": 50
+					}
+				},
+				{
+					"filename": "powerups/powup12",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 50,
+						"h": 50
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 50,
+						"h": 50
+					},
+					"frame": {
+						"x": 684,
+						"y": 326,
+						"w": 50,
+						"h": 50
+					}
+				},
+				{
+					"filename": "powerups/powup09",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 49,
+						"h": 49
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 49,
+						"h": 49
+					},
+					"frame": {
+						"x": 736,
+						"y": 326,
+						"w": 49,
+						"h": 49
+					}
+				}
+			]
+		}
+	],
+	"meta": {
+		"app": "https://www.codeandweb.com/texturepacker",
+		"version": "3.0",
+		"smartupdate": "$TexturePacker:SmartUpdate:a3216dfce6c7b99661e4fd9c08c6eea9:7d6c9a49abb8715358f15d536a4914ef:8831f922b0cc45ac83a7362cda3956c9$"
+	}
+}
