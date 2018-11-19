@@ -3,6 +3,14 @@ import { Scene, GameObjects, Matter } from 'phaser';
 
 import blazerMan from '../assets/BackupBlazerstories/mainC.png';
 import ball from '../assets/BounceNBounce/powerups/02powup.png';
+import background from '../assets/backG.png';
+import boden from '../assets/boden.png';
+import bamboo from '../assets/bamboo.png';
+import house from '../assets/house.png';
+import w1 from '../assets/w1.png';
+import w2 from '../assets/w2.png';
+import w3 from '../assets/w3.png';
+import w4 from '../assets/w4.png';
 
 
 import style from '../style/default.css';
@@ -17,18 +25,22 @@ var scoreText;
 class TestScene extends Scene {
 
     constructor() {
-
         super({
             key: "TestScene"
         })
-
-
-
     }
 
     preload () {
         this.load.image('blazerMan', blazerMan)
         this.load.image('ball', ball)
+        this.load.image('background', background)
+        this.load.image('boden', boden)
+        this.load.image('bamboo', bamboo)
+        this.load.image('house', house)
+        this.load.image('w1', w1)
+        this.load.image('w2', w2)
+        this.load.image('w3', w3)
+        this.load.image('w3', w3)
 
         //this.player.body.
         //this.load.image('circle', circle);
@@ -38,35 +50,75 @@ class TestScene extends Scene {
 
         var catChars = this.matter.world.nextCategory();
         var catWalls = this.matter.world.nextCategory();
+        var catBalls = this.matter.world.nextCategory();
+        var catBackground = this.matter.world.nextCategory();
+
 
 
 
         this.cursors = this.input.keyboard.createCursorKeys()
 
         console.log(this.matter)
-        const gameHeight = 100000;
+        const gameHeight = 10000;
         const y = gameHeight - 100
         this.matter.world.setBounds(0, 0, 800, gameHeight)
+
+
+        // set background
+        this.background = this.matter.scene.add.image(0, gameHeight, 'background')
+        // clouds
+        this.clouds = []
+
+        for (let i = y - (Math.random() * 1000); i > 1000; i -= (Math.random() * 1000)) {
+            const cloud = this.matter.add.image((Math.random() * 1600) - 800, i, 'w' + Math.ceil((Math.random() * 3)))
+            cloud.setIgnoreGravity(true)
+            cloud.setCollidesWith([])
+            this.clouds.push({
+                cloud: cloud,
+                direction: (Math.ceil(i) % 3) - 1
+            })
+        }
+
+    //this.background.setCollisionCategory(catBackground)
+
 
         this.character = this.matter.add.image(50, y, 'blazerMan')
         this.character.setCollisionCategory(catChars);
 
-        this.matter.scene.cameras.main.startFollow(this.character)
+        this.matter.scene.cameras.main.setBounds(0, 0, 800, gameHeight - 175)
+        this.matter.scene.cameras.main.startFollow(this.character, true, 0.99, 0.99)
         const walls = [];
-        this.matter.add.image(200, y, 'blazerMan')
-        for (let i = y + 50; i > 1000; i -= 80) {
-            const left = this.matter.add.image(0, i, 'blazerMan')
+
+        const secondMan = this.matter.add.image(200, y, 'blazerMan')
+        secondMan.setCollisionCategory(catChars)
+
+
+        
+            
+
+        for (let i = y + 52; i > 1000; i -= 52) {
+            const left = this.matter.add.image(0, i, 'bamboo')
             left.setCollisionCategory(catWalls);
             left.setStatic(true)
 
-            const right = this.matter.add.image(800, i, 'blazerMan')
+            const right = this.matter.add.image(800, i, 'bamboo')
             right.setCollisionCategory(catWalls);
             right.setStatic(true)
             walls.push(right)
         }
+        const houseSprite = this.matter.add.image(400, gameHeight - 340, 'house')
+        houseSprite.setCollisionCategory(catBackground);
+        houseSprite.setStatic(true)
+        for (let i = 0; i < 2; i++) {
+            const floor = this.matter.add.image(i * 800, gameHeight, 'boden')
+            floor.setCollisionCategory(catWalls);
+            floor.setStatic(true)
+        }
+
         this.ballSprite = this.matter.add.image(100, y - 400, ball)
         const bounceFactor = .8
         this.ballSprite.setBounce(bounceFactor,bounceFactor)
+        this.ballSprite.setCollisionCategory(catBalls)
         console.log(this.ballSprite)
         //this.matter.add.circle(50, 500, 10)
         this.character.setMass(20)
@@ -74,6 +126,7 @@ class TestScene extends Scene {
 
         this.input.keyboard.on("keydown_A", () => {
             console.log(this.character.getBounds(), this.matter.world)
+            console.log(this.matter.scene.cameras.main)
         })
         this.input.keyboard.on("keydown_SPACE", () => {
             this.character.applyForce({x: 0, y: -0.8})
@@ -97,20 +150,25 @@ class TestScene extends Scene {
 
         })
 
-//setup collision
+        //setup collision 
+        this.character.setCollidesWith([ catWalls, catChars, catBalls]);
+        this.ballSprite.setCollidesWith([catWalls, catBalls, catChars]);
 
-        this.character.setCollidesWith([ catWalls, catChars ]);
         this.matter.world.on('collisionstart', function (event) {
 
         })
 
 
         scoreText = this.add.text(32, 24, scoreString + score);
-            scoreText.visible = true;
+        scoreText.visible = true;
+        console.log(this.background)
     }
 
     update() {
         this.character.setAngle(0)
+        //this.background.
+        const cam = this.matter.scene.cameras.main
+        this.background.setPosition(400, cam._scrollY + 300)
 
         if (this.cursors.left.isDown) {
             this.character.setVelocityX(-5)
@@ -124,6 +182,19 @@ class TestScene extends Scene {
         }
         if (this.cursors.down.isDown) {
         }
+
+
+
+        this.clouds.forEach(cloud => {
+            if (cloud.cloud.x > 800) {
+                cloud.direction = -1
+            }
+            if (cloud.cloud.x < 0) {
+                cloud.direction = 1
+            }
+            cloud.cloud.setVelocity(cloud.direction, 0)
+
+        })
     }
 }
 

@@ -10,8 +10,8 @@ const config = {
     physics: {
         default: 'matter',
         matter: {
-            gravity: { y: .5 }
-            //debug: true
+            gravity: { y: .5 },
+            debug: true
         }
     },
     scene: [
