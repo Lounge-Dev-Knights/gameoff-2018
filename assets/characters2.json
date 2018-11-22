@@ -3,7 +3,7 @@
 	"mainC": {
 		"type": "fromPhysicsEditor",
 		"label": "mainC",
-		"isStatic": true,
+		"isStatic": false,
 		"density": 1,
 		"restitution": 0.1,
 		"friction": 0.1,
@@ -30,17 +30,17 @@
 			}
 		]
 	},
-	"powup01": {
+	"01powup": {
 		"type": "fromPhysicsEditor",
 		"label": "01powup",
-		"isStatic": true,
+		"isStatic": false,
 		"density": 0,
 		"restitution": 0,
 		"friction": 0,
 		"frictionAir": 0,
 		"frictionStatic": 0,
 		"collisionFilter": {
-			"group": 2,
+			"group": 3,
 			"category": 1,
 			"mask": 255
 		},
@@ -49,24 +49,24 @@
 				"label": "",
 				"isSensor": false,
 				"circle": {
-					"x": 24.721238938053098,
-					"y": 25.778761061946906,
-					"radius": 24.440027592126246
+					"x": 25.221238938053098,
+					"y": 25.778761061946902,
+					"radius": 23.539823008849567
 				}
 			}
 		]
 	},
-	"powup02": {
+	"02powup": {
 		"type": "fromPhysicsEditor",
 		"label": "02powup",
-		"isStatic": true,
+		"isStatic": false,
 		"density": 0,
 		"restitution": 0,
 		"friction": 0,
 		"frictionAir": 0,
 		"frictionStatic": 0,
 		"collisionFilter": {
-			"group": 2,
+			"group": 3,
 			"category": 1,
 			"mask": 255
 		},
@@ -82,17 +82,17 @@
 			}
 		]
 	},
-	"powup03": {
+	"03powup": {
 		"type": "fromPhysicsEditor",
 		"label": "03powup",
-		"isStatic": true,
+		"isStatic": false,
 		"density": 0,
 		"restitution": 0,
 		"friction": 0,
 		"frictionAir": 0,
 		"frictionStatic": 0,
 		"collisionFilter": {
-			"group": 2,
+			"group": 3,
 			"category": 1,
 			"mask": 255
 		},
@@ -108,17 +108,17 @@
 			}
 		]
 	},
-	"powup04": {
+	"04powup": {
 		"type": "fromPhysicsEditor",
 		"label": "04powup",
-		"isStatic": true,
+		"isStatic": false,
 		"density": 0,
 		"restitution": 0,
 		"friction": 0,
 		"frictionAir": 0,
 		"frictionStatic": 0,
 		"collisionFilter": {
-			"group": 2,
+			"group": 3,
 			"category": 1,
 			"mask": 255
 		},
@@ -134,17 +134,17 @@
 			}
 		]
 	},
-	"powup05": {
+	"05powup": {
 		"type": "fromPhysicsEditor",
 		"label": "05powup",
-		"isStatic": true,
+		"isStatic": false,
 		"density": 0,
 		"restitution": 0,
 		"friction": 0,
 		"frictionAir": 0,
 		"frictionStatic": 0,
 		"collisionFilter": {
-			"group": 2,
+			"group": 3,
 			"category": 1,
 			"mask": 255
 		},
@@ -160,7 +160,7 @@
 			}
 		]
 	},
-	"powup06": {
+	"06powup": {
 		"type": "fromPhysicsEditor",
 		"label": "06powup",
 		"isStatic": false,
@@ -170,7 +170,7 @@
 		"frictionAir": 0,
 		"frictionStatic": 0,
 		"collisionFilter": {
-			"group": 2,
+			"group": 3,
 			"category": 1,
 			"mask": 255
 		},
@@ -186,7 +186,7 @@
 			}
 		]
 	},
-	"powup07": {
+	"07powup": {
 		"type": "fromPhysicsEditor",
 		"label": "07powup",
 		"isStatic": false,
@@ -212,7 +212,7 @@
 			}
 		]
 	},
-	"powup08": {
+	"08powup": {
 		"type": "fromPhysicsEditor",
 		"label": "08powup",
 		"isStatic": false,
@@ -228,7 +228,7 @@
 		},
 		"fixtures": []
 	},
-	"powup09": {
+	"09powup": {
 		"type": "fromPhysicsEditor",
 		"label": "09powup",
 		"isStatic": false,
@@ -244,7 +244,7 @@
 		},
 		"fixtures": []
 	},
-	"powup10": {
+	"10powup": {
 		"type": "fromPhysicsEditor",
 		"label": "10powup",
 		"isStatic": false,
@@ -260,7 +260,7 @@
 		},
 		"fixtures": []
 	},
-	"powup11": {
+	"11powup": {
 		"type": "fromPhysicsEditor",
 		"label": "11powup",
 		"isStatic": false,
@@ -276,7 +276,7 @@
 		},
 		"fixtures": []
 	},
-	"powup12": {
+	"12powup": {
 		"type": "fromPhysicsEditor",
 		"label": "12powup",
 		"isStatic": false,

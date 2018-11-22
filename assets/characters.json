@@ -32,7 +32,7 @@
 	},
 	"powup01": {
 		"type": "fromPhysicsEditor",
-		"label": "01powup",
+		"label": "powup01",
 		"isStatic": true,
 		"density": 0,
 		"restitution": 0,
@@ -58,8 +58,8 @@
 	},
 	"powup02": {
 		"type": "fromPhysicsEditor",
-		"label": "02powup",
-		"isStatic": true,
+		"label": "powup02",
+		"isStatic": false,
 		"density": 0,
 		"restitution": 0,
 		"friction": 0,
@@ -84,7 +84,7 @@
 	},
 	"powup03": {
 		"type": "fromPhysicsEditor",
-		"label": "03powup",
+		"label": "powup03",
 		"isStatic": true,
 		"density": 0,
 		"restitution": 0,
@@ -110,7 +110,7 @@
 	},
 	"powup04": {
 		"type": "fromPhysicsEditor",
-		"label": "04powup",
+		"label": "powup04",
 		"isStatic": true,
 		"density": 0,
 		"restitution": 0,
@@ -136,7 +136,7 @@
 	},
 	"powup05": {
 		"type": "fromPhysicsEditor",
-		"label": "05powup",
+		"label": "powup05",
 		"isStatic": true,
 		"density": 0,
 		"restitution": 0,
@@ -162,7 +162,7 @@
 	},
 	"powup06": {
 		"type": "fromPhysicsEditor",
-		"label": "06powup",
+		"label": "powup06",
 		"isStatic": false,
 		"density": 0,
 		"restitution": 0,
@@ -188,7 +188,7 @@
 	},
 	"powup07": {
 		"type": "fromPhysicsEditor",
-		"label": "07powup",
+		"label": "powup07",
 		"isStatic": false,
 		"density": 0,
 		"restitution": 0,
@@ -214,7 +214,7 @@
 	},
 	"powup08": {
 		"type": "fromPhysicsEditor",
-		"label": "08powup",
+		"label": "powup08",
 		"isStatic": false,
 		"density": 0,
 		"restitution": 0,
@@ -230,7 +230,7 @@
 	},
 	"powup09": {
 		"type": "fromPhysicsEditor",
-		"label": "09powup",
+		"label": "powup09",
 		"isStatic": false,
 		"density": 0,
 		"restitution": 0,
@@ -246,7 +246,7 @@
 	},
 	"powup10": {
 		"type": "fromPhysicsEditor",
-		"label": "10powup",
+		"label": "powup10",
 		"isStatic": false,
 		"density": 0,
 		"restitution": 0,
@@ -262,7 +262,7 @@
 	},
 	"powup11": {
 		"type": "fromPhysicsEditor",
-		"label": "11powup",
+		"label": "powup11",
 		"isStatic": false,
 		"density": 0,
 		"restitution": 0,
@@ -278,7 +278,7 @@
 	},
 	"powup12": {
 		"type": "fromPhysicsEditor",
-		"label": "12powup",
+		"label": "powup12",
 		"isStatic": false,
 		"density": 0,
 		"restitution": 0,
