@@ -83,6 +83,8 @@ class TestScene extends Scene {
 
 
         this.character = this.matter.add.image(50, y, 'blazerMan')
+        this.character.canJump = true;
+        this.character.setFrictionAir(0)
         this.character.setCollisionCategory(catChars);
 
         this.matter.scene.cameras.main.setBounds(0, 0, 800, gameHeight - 175)
@@ -96,7 +98,7 @@ class TestScene extends Scene {
         
             
 
-        for (let i = y + 52; i > 1000; i -= 52) {
+        for (let i = y + 52; i > 0; i -= 52) {
             const left = this.matter.add.image(0, i, 'bamboo')
             left.setCollisionCategory(catWalls);
             left.setStatic(true)
@@ -106,6 +108,7 @@ class TestScene extends Scene {
             right.setStatic(true)
             walls.push(right)
         }
+
         const houseSprite = this.matter.add.image(400, gameHeight - 340, 'house')
         houseSprite.setCollisionCategory(catBackground);
         houseSprite.setStatic(true)
@@ -113,23 +116,33 @@ class TestScene extends Scene {
             const floor = this.matter.add.image(i * 800, gameHeight, 'boden')
             floor.setCollisionCategory(catWalls);
             floor.setStatic(true)
+
+            const ceil = this.matter.add.image(i * 800, 0, 'boden')
+            ceil.setCollisionCategory(catWalls);
+            ceil.setStatic(true)
         }
 
         this.ballSprite = this.matter.add.image(100, y - 400, ball)
         const bounceFactor = .8
+        this.ballSprite.setCircle(100)
+        this.ballSprite.setMass(1)
         this.ballSprite.setBounce(bounceFactor,bounceFactor)
-        this.ballSprite.setCollisionCategory(catBalls)
         console.log(this.ballSprite)
         //this.matter.add.circle(50, 500, 10)
         this.character.setMass(20)
         console.log(this.character)
+        this.ballSprite.setCollisionCategory(catBalls)
 
         this.input.keyboard.on("keydown_A", () => {
             console.log(this.character.getBounds(), this.matter.world)
             console.log(this.matter.scene.cameras.main)
         })
         this.input.keyboard.on("keydown_SPACE", () => {
-            this.character.applyForce({x: 0, y: -0.8})
+            // Jump
+            if (this.character.canJump > 0) {
+                this.character.applyForce({x: 0, y: -0.8})
+                this.character.canJump -= 1;
+            }
         })
         //this.input.keyboard.on("keydown_UP", () => {
         //    this.character.setScale(2)
@@ -153,8 +166,19 @@ class TestScene extends Scene {
         //setup collision 
         this.character.setCollidesWith([ catWalls, catChars, catBalls]);
         this.ballSprite.setCollidesWith([catWalls, catBalls, catChars]);
+        const char = this.character;
 
-        this.matter.world.on('collisionstart', function (event) {
+        this.matter.world.on('collisionstart', function (event, bodyA, bodyB) {
+            console.log(this.walls)
+            console.log('collision', event, bodyA, bodyB)
+            
+            if ((bodyA.collisionFilter.category === catWalls || 
+                bodyB.collisionFilter.category === catWalls) &&
+                (bodyA.collisionFilter.category === catChars || 
+                bodyB.collisionFilter.category === catChars))
+            {
+                char.canJump = 2;
+            }
 
         })
 
@@ -165,17 +189,20 @@ class TestScene extends Scene {
     }
 
     update() {
+        const speed = 8;
         this.character.setAngle(0)
         //this.background.
         const cam = this.matter.scene.cameras.main
         this.background.setPosition(400, cam._scrollY + 300)
 
+        this.character.setVelocityX(this.character.body.velocity.x * 0.9);
+
         if (this.cursors.left.isDown) {
-            this.character.setVelocityX(-5)
+            this.character.setVelocityX(-speed)
             this.character.setFlipX(true)
         }
         if (this.cursors.right.isDown) {
-            this.character.setVelocityX(5)
+            this.character.setVelocityX(speed)
             this.character.setFlipX(false)
         }
         if (this.cursors.up.isDown) {
