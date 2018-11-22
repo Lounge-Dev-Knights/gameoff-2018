@@ -2,7 +2,7 @@
 import { Scene, GameObjects, Matter } from 'phaser';
 
 import blazerMan from '../assets/BackupBlazerstories/mainC.png';
-import ball from '../assets/BounceNBounce/powerups/02powup.png';
+import ball from '../assets/ball.png';
 import background from '../assets/backG.png';
 import boden from '../assets/boden.png';
 import bamboo from '../assets/bamboo.png';
@@ -124,7 +124,7 @@ class TestScene extends Scene {
 
         this.ballSprite = this.matter.add.image(100, y - 400, ball)
         const bounceFactor = .8
-        this.ballSprite.setCircle(100)
+        //this.ballSprite.setCircle(100)
         this.ballSprite.setMass(1)
         this.ballSprite.setBounce(bounceFactor,bounceFactor)
         console.log(this.ballSprite)
@@ -178,6 +178,7 @@ class TestScene extends Scene {
                 bodyB.collisionFilter.category === catChars))
             {
                 char.canJump = 2;
+                char.setVelocityY(0)
             }
 
         })
