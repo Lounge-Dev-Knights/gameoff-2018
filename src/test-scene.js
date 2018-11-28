@@ -154,7 +154,7 @@ class TestScene extends Scene {
         this.character = this.matter.add.sprite(200, y, 'sumoSheet', 2)
         this.character.setCircle(50)
         this.character.canJump = true;
-        this.character.setFrictionAir(0)  
+        this.character.setFrictionAir(0)
         this.character.setMass(20)
         this.character.setBounce(bounceFactor,bounceFactor)
         this.character.setCollisionCategory(catChars);
@@ -209,7 +209,7 @@ class TestScene extends Scene {
         }
 
 
-        // Title 
+        // Title
         this.presents = this.matter.scene.add.image(400, -800, 'presents')
         this.title = this.matter.scene.add.image(400, -450, 'title')
 
@@ -223,8 +223,7 @@ class TestScene extends Scene {
         //console.log(this.ballSprite)
         //this.matter.add.circle(50, 500, 10)
         //
-        this.character.setMass(20)
-        this.character.setBounce(bounceFactor,bounceFactor)
+
         this.ballSprite.setCollisionCategory(catBalls)
         this.ballSprite.setCollidesWith([catWalls, catFloor, catBalls, catChars]);
 
@@ -235,7 +234,7 @@ class TestScene extends Scene {
         })
         this.input.keyboard.on("keydown_SPACE", () => {
             // Jump
-            
+
             if (!this.gameStarted) {
                 this.startGame()
             }
@@ -289,7 +288,7 @@ class TestScene extends Scene {
             //console.log('collision', event, bodyA, bodyB)
             //
             //
-            if ((bodyA.collisionFilter.category === catWalls || 
+            if ((bodyA.collisionFilter.category === catWalls ||
                 bodyB.collisionFilter.category === catWalls) &&
                 (bodyA.collisionFilter.category === catChars ||
                     bodyB.collisionFilter.category === catChars))
@@ -378,18 +377,18 @@ class TestScene extends Scene {
             }
 
 
-            // Check and process map extension if needed 
-            
+            // Check and process map extension if needed
+
             const oldGameHeight = gameHeight
             const newGameHeight = -this.ballSprite.y + 1000
-            
+
             if (newGameHeight > gameHeight) {
                 gameHeight = newGameHeight + 1000
                 this.createWalls(oldGameHeight, gameHeight)
                 this.createClouds(oldGameHeight, gameHeight)
 
                 //this.children.bringToTop(this.scene)
-                this.matter.scene.cameras.main.setBounds(0, -gameHeight - 1000, 800, gameHeight + 1000 - 150 ) 
+                this.matter.scene.cameras.main.setBounds(0, -gameHeight - 1000, 800, gameHeight + 1000 - 150 )
 
             }
 
