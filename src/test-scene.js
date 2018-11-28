@@ -44,15 +44,26 @@ class TestScene extends Scene {
         this.title.setVisible(false)
         this.ballSprite.setIgnoreGravity(false)
         this.gameStarted = true;
+        this.ballSprite.applyForce({x: -0.01, y: -0.03})
+
     }
-    gameOver() {
+    gameOver () {
 
       if (this.character == this.ballSprite.lastTouchedBy) {
         highestTouchPlayer = 1;
       } else {
         highestTouchPlayer = 2;
       }
-      //return
+
+        scoreText = this.add.text(32, 24, scoreString + score, {
+            fontSize: 32,
+            stroke: 'black',
+            strokeThickness: 5
+        });
+
+        gameoverText = this.add.image(32, 24, 'gameover');
+        gameoverText.visible = false;
+
         console.log("gameover")
         gameRunning = false;
         scoreText.visible = true;
@@ -224,9 +235,9 @@ class TestScene extends Scene {
 
         // Title
         this.presents = this.matter.scene.add.image(400, -800, 'presents')
-        this.title = this.matter.scene.add.image(400, -450, 'title')
+        this.title = this.matter.scene.add.image(400, -490, 'title')
 
-        this.ballSprite = this.matter.add.image(585, y - 432, 'ball')
+        this.ballSprite = this.matter.add.image(585, y - 472, 'ball')
         const ballScale = 0.56;
         this.ballSprite.setScale(ballScale)
         this.ballSprite.setCircle(150 * ballScale)
@@ -325,12 +336,12 @@ class TestScene extends Scene {
             {
               if(bodyA.collisionFilter.category == catChars){
                 bodyA.gameObject.canJump = 2
-                bodyA.gameObject.setVelocityY(0)
+                bodyA.gameObject.setVelocityY(Math.max(0, bodyA.gameObject.velocity.y))
                 bodyA.gameObject.setFrame(0)
               }
               if(bodyB.collisionFilter.category == catChars){
                 bodyB.gameObject.canJump = 2
-                bodyB.gameObject.setVelocityY(0)
+                bodyB.gameObject.setVelocityY(Math.max(0, bodyB.gameObject.velocity.y))
                 bodyB.gameObject.setFrame(0)
               }
             }
@@ -363,14 +374,6 @@ class TestScene extends Scene {
         })
 
 
-        scoreText = this.add.text(0, 24, scoreString + score, {
-            fontSize: 32,
-            stroke: 'black',
-            strokeThickness: 5
-        });
-        scoreText.visible = false;
-        gameoverText = this.add.image(32, 24, 'gameover');
-        gameoverText.visible = false;
         //console.log(this.background)
     }
 
@@ -378,8 +381,6 @@ class TestScene extends Scene {
 
         const cam = this.matter.scene.cameras.main
         this.background.setPosition(400, cam._scrollY + viewHeight / 2)
-        scoreText.setPosition(280, cam._scrollY + viewHeight / 2 - 350)
-        gameoverText.setPosition(400, cam._scrollY + viewHeight / 2)
 
         if (gameRunning) {
 
@@ -457,13 +458,20 @@ class TestScene extends Scene {
 
             if (newGameHeight > gameHeight) {
                 gameHeight = newGameHeight + 1000
-                this.createWalls(oldGameHeight, gameHeight)
                 this.createClouds(oldGameHeight, gameHeight)
+                this.createWalls(oldGameHeight, gameHeight)
 
-                //this.children.bringToTop(this.scene)
+                this.children.bringToTop(this.character)
+                this.children.bringToTop(this.ballSprite)
                 this.matter.scene.cameras.main.setBounds(0, -gameHeight - 1000, 800, gameHeight + 1000 - 150 )
 
             }
+
+        } else {
+
+            // Move gameover-text with camera
+            scoreText.setPosition(180, cam._scrollY + viewHeight / 2 - 350)
+            gameoverText.setPosition(400, cam._scrollY + viewHeight / 2)
         }
     }
 }
