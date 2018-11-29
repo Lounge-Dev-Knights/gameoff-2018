@@ -13,6 +13,7 @@ import w1 from '../assets/w1.png';
 import w2 from '../assets/w2.png';
 import w3 from '../assets/w3.png';
 import w4 from '../assets/w4.png';
+import gameover from '../assets/game-over.png';
 
 
 import style from '../style/default.css';
@@ -42,7 +43,7 @@ class TestScene extends Scene {
         gameRunning = false;
         scoreText.visible = true;
         gameoverText.visible = true;
-        scoreText.setText("your score: " + Math.round(score, 0));
+        scoreText.setText("score: " + Math.round(score, 0));
     }
 
     preload () {
@@ -57,7 +58,8 @@ class TestScene extends Scene {
         this.load.image('w1', w1)
         this.load.image('w2', w2)
         this.load.image('w3', w3)
-        this.load.image('w3', w3)
+        this.load.image('w4', w4)
+        this.load.image('gameover', gameover)
 
         //this.player.body.
         //this.load.image('circle', circle);
@@ -134,7 +136,7 @@ class TestScene extends Scene {
         houseSprite.setCollisionCategory(catBackground);
         houseSprite.setStatic(true)
         for (let i = 0; i < 2; i++) {
-            const floor = this.matter.add.image(i * 800, gameHeight, 'boden')
+            const floor = this.matter.add.image(i * 800, gameHeight, 'boden').setOrigin(0.5, 0.55)
             floor.setCollisionCategory(catFloor);
             floor.setStatic(true)
 
@@ -226,12 +228,13 @@ class TestScene extends Scene {
         })
 
 
-        scoreText = this.add.text(32, 24, scoreString + score);
-        scoreText.visible = false;
-        gameoverText = this.add.text(32, 24, "GAME OVER", { 
-            fontSize: 92 ,
-            color: 'red'
+        scoreText = this.add.text(32, 24, scoreString + score, {
+            fontSize: 32,
+            stroke: 'black',
+            strokeThickness: 1
         });
+        scoreText.visible = false;
+        gameoverText = this.add.image(32, 24, 'gameover');
         gameoverText.visible = false;
         console.log(this.background)
     }
@@ -239,8 +242,8 @@ class TestScene extends Scene {
     update() {
         const cam = this.matter.scene.cameras.main
         this.background.setPosition(400, cam._scrollY + viewHeight / 2)
-        scoreText.setPosition(300, cam._scrollY + viewHeight / 2)
-        gameoverText.setPosition(150, cam._scrollY + viewHeight / 2 - 100)
+        scoreText.setPosition(280, cam._scrollY + viewHeight / 2 - 300)
+        gameoverText.setPosition(400, cam._scrollY + viewHeight / 2)
 
         if (gameRunning) {
             score = Math.max(score, gameHeight - this.ballSprite.y)
