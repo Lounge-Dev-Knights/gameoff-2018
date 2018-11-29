@@ -31,16 +31,23 @@ var scoreText;
 
 class TestScene extends Scene {
 
-constructor() {
-    super({
-        key: "TestScene"
-    })
-}
+    constructor() {
+        super({
+            key: "TestScene"
+        })
+    }
 
-preload () {
-    this.load.spritesheet('sumoSheet', dudes, { frameWidth: 100, frameHeight: 100})
-    this.load.image('sumo', sumo)
-    this.load.image('sumo2', sumo2)
+    gameOver () {
+        console.log("gameover")
+        gameRunning = false;
+        scoreText.visible = true;
+        scoreText.setText("your score: " + score);
+    }
+
+    preload () {
+        this.load.spritesheet('sumoSheet', dudes, { frameWidth: 100, frameHeight: 100})
+        this.load.image('sumo', sumo)
+        this.load.image('sumo2', sumo2)
         this.load.image('ball', ball)
         this.load.image('background', background)
         this.load.image('boden', boden)
@@ -59,6 +66,7 @@ preload () {
 
         var catChars = this.matter.world.nextCategory();
         var catWalls = this.matter.world.nextCategory();
+        var catFloor = this.matter.world.nextCategory();
         var catBalls = this.matter.world.nextCategory();
         var catBackground = this.matter.world.nextCategory();
 
@@ -89,7 +97,7 @@ preload () {
             })
         }
 
-    //this.background.setCollisionCategory(catBackground)
+        //this.background.setCollisionCategory(catBackground)
 
 
         this.character = this.matter.add.sprite(50, y, 'sumoSheet', 2)
@@ -106,8 +114,8 @@ preload () {
         secondMan.setCollisionCategory(catChars)
 
 
-        
-            
+
+
 
         const bambooHeight = 52;
         for (let i = y + bambooHeight; i > 0; i -= bambooHeight * 10) {
@@ -128,7 +136,7 @@ preload () {
         houseSprite.setStatic(true)
         for (let i = 0; i < 2; i++) {
             const floor = this.matter.add.image(i * 800, gameHeight, 'boden')
-            floor.setCollisionCategory(catWalls);
+            floor.setCollisionCategory(catFloor);
             floor.setStatic(true)
 
             const ceil = this.matter.add.image(i * 800, 0, 'boden')
@@ -155,7 +163,8 @@ preload () {
         })
         this.input.keyboard.on("keydown_SPACE", () => {
             // Jump
-            if (this.character.canJump > 0) {
+
+            if (gameRunning && this.character.canJump > 0) {
                 //this.character.applyForce({x: 0, y: -0.8})
                 this.character.setVelocityY(-10)
                 // TODO maybe second jump less high
@@ -185,89 +194,103 @@ preload () {
         })
 
         //setup collision 
-        this.character.setCollidesWith([ catWalls, catChars, catBalls]);
-        this.ballSprite.setCollidesWith([catWalls, catBalls, catChars]);
+        this.character.setCollidesWith([ catWalls, catFloor, catChars, catBalls]);
+        this.ballSprite.setCollidesWith([catWalls, catFloor, catBalls, catChars]);
         const char = this.character;
 
+
+        // why does this.gameOver() fail inside the collision-handler?
+        const gameOver = this.gameOver;
         this.matter.world.on('collisionstart', function (event, bodyA, bodyB) {
             //console.log(this.walls)
             //console.log('collision', event, bodyA, bodyB)
             //
+            console.log(event, bodyA, bodyB)
             if ((bodyA.collisionFilter.category === catWalls || 
                 bodyB.collisionFilter.category === catWalls) &&
                 (bodyA.collisionFilter.category === catChars || 
-                bodyB.collisionFilter.category === catChars))
+                    bodyB.collisionFilter.category === catChars))
             {
                 char.canJump = 2;
                 char.setVelocityY(0)
                 char.setFrame(0)
             }
 
+            if ((bodyA.collisionFilter.category === catFloor || 
+                bodyB.collisionFilter.category === catFloor) &&
+                (bodyA.collisionFilter.category === catBalls || 
+                    bodyB.collisionFilter.category === catBalls))
+            {
+                gameOver();
+            }
         })
 
 
         scoreText = this.add.text(32, 24, scoreString + score);
-        scoreText.visible = true;
+        scoreText.visible = false;
         console.log(this.background)
     }
 
     update() {
-        score = Math.max(score, gameHeight - this.ballSprite.y)
-        //scoreText.setText(score)
-        const speed = 8;
-        this.character.setAngle(0)
-        //this.background.
         const cam = this.matter.scene.cameras.main
         this.background.setPosition(400, cam._scrollY + viewHeight / 2)
+        scoreText.setPosition(400, cam._scrollY + viewHeight / 2)
 
-        this.character.setVelocityX(this.character.body.velocity.x * 0.9);
+        if (gameRunning) {
+            score = Math.max(score, gameHeight - this.ballSprite.y)
+            //scoreText.setText(score)
+            const speed = 8;
+            this.character.setAngle(0)
+            //this.background.
 
-        //this.character.setFrame(1)
-        if (this.cursors.left.isDown) {
-            this.character.setVelocityX(-speed)
-            this.character.setFlipX(true)
-            //t//his.character.setFrame(0)
-        }
-        if (this.cursors.right.isDown) {
-            this.character.setVelocityX(speed)
-            this.character.setFlipX(false)
-            //this.character.setFrame(2)
-        }
-        if (this.cursors.down.isDown) {
-            if (this.character.body.velocity.y < speed) {
-            this.character.setVelocityY(speed)
+            this.character.setVelocityX(this.character.body.velocity.x * 0.9);
+
+            //this.character.setFrame(1)
+            if (this.cursors.left.isDown) {
+                this.character.setVelocityX(-speed)
+                this.character.setFlipX(true)
+                //t//his.character.setFrame(0)
             }
-            //this.character.setFlipX(false)
-            //this.character.setFrame(2)
-        }
-        if (this.cursors.up.isDown) {
-        }
-        if (this.cursors.down.isDown) {
-        }
-
-
-
-        this.clouds.forEach(cloud => {
-            if (cloud.cloud.x > 800) {
-                cloud.direction = -1
+            if (this.cursors.right.isDown) {
+                this.character.setVelocityX(speed)
+                this.character.setFlipX(false)
+                //this.character.setFrame(2)
             }
-            if (cloud.cloud.x < 0) {
-                cloud.direction = 1
+            if (this.cursors.down.isDown) {
+                if (this.character.body.velocity.y < speed) {
+                    this.character.setVelocityY(speed)
+                }
+                //this.character.setFlipX(false)
+                //this.character.setFrame(2)
             }
-            cloud.cloud.setVelocity(cloud.direction, 0)
+            if (this.cursors.up.isDown) {
+            }
+            if (this.cursors.down.isDown) {
+            }
 
-        })
 
-        
-        if (gameRunning && this.ballSprite.y > (this.character.y + 500) ) {
-            gameRunning = false;
-            scoreText.setText("your score: " + score);
+
+            this.clouds.forEach(cloud => {
+                if (cloud.cloud.x > 800) {
+                    cloud.direction = -1
+                }
+                if (cloud.cloud.x < 0) {
+                    cloud.direction = 1
+                }
+                cloud.cloud.setVelocity(cloud.direction, 0)
+
+            })
+
+
+            if (this.ballSprite.y > (this.character.y + 500) ) {
+                this.gameOver();
+            }
         }
-        if (!gameRunning) {
-            scoreText.setPosition(400, cam._scrollY + viewHeight / 2)
-        }
+
 
     }
+
+
 }
 
 export default TestScene
