@@ -24,7 +24,7 @@ const gameHeight = 10000;
 let gameRunning = true;
 var score = 0;
 var scoreString = "Score: ";
-var scoreText;
+var scoreText, gameoverText;
 
 
 
@@ -41,7 +41,8 @@ class TestScene extends Scene {
         console.log("gameover")
         gameRunning = false;
         scoreText.visible = true;
-        scoreText.setText("your score: " + score);
+        gameoverText.visible = true;
+        scoreText.setText("your score: " + Math.round(score, 0));
     }
 
     preload () {
@@ -152,6 +153,7 @@ class TestScene extends Scene {
         console.log(this.ballSprite)
         //this.matter.add.circle(50, 500, 10)
         this.character.setMass(20)
+        this.character.setBounce(bounceFactor,bounceFactor)
         console.log(this.character)
         this.ballSprite.setCollisionCategory(catBalls)
 
@@ -226,13 +228,19 @@ class TestScene extends Scene {
 
         scoreText = this.add.text(32, 24, scoreString + score);
         scoreText.visible = false;
+        gameoverText = this.add.text(32, 24, "GAME OVER", { 
+            fontSize: 92 ,
+            color: 'red'
+        });
+        gameoverText.visible = false;
         console.log(this.background)
     }
 
     update() {
         const cam = this.matter.scene.cameras.main
         this.background.setPosition(400, cam._scrollY + viewHeight / 2)
-        scoreText.setPosition(400, cam._scrollY + viewHeight / 2)
+        scoreText.setPosition(300, cam._scrollY + viewHeight / 2)
+        gameoverText.setPosition(150, cam._scrollY + viewHeight / 2 - 100)
 
         if (gameRunning) {
             score = Math.max(score, gameHeight - this.ballSprite.y)
