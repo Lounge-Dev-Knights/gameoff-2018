@@ -132,7 +132,7 @@ class TestScene extends Scene {
             walls.push(right)
         }
 
-        const houseSprite = this.matter.add.image(400, gameHeight - 340, 'house')
+        const houseSprite = this.matter.add.image(400, gameHeight - 365, 'house')
         houseSprite.setCollisionCategory(catBackground);
         houseSprite.setStatic(true)
         for (let i = 0; i < 2; i++) {
@@ -231,7 +231,7 @@ class TestScene extends Scene {
         scoreText = this.add.text(32, 24, scoreString + score, {
             fontSize: 32,
             stroke: 'black',
-            strokeThickness: 1
+            strokeThickness: 5
         });
         scoreText.visible = false;
         gameoverText = this.add.image(32, 24, 'gameover');
@@ -242,7 +242,7 @@ class TestScene extends Scene {
     update() {
         const cam = this.matter.scene.cameras.main
         this.background.setPosition(400, cam._scrollY + viewHeight / 2)
-        scoreText.setPosition(280, cam._scrollY + viewHeight / 2 - 300)
+        scoreText.setPosition(280, cam._scrollY + viewHeight / 2 - 350)
         gameoverText.setPosition(400, cam._scrollY + viewHeight / 2)
 
         if (gameRunning) {
