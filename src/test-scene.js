@@ -120,12 +120,10 @@ class TestScene extends Scene {
         const bambooHeight = 52;
         for (let i = y + bambooHeight; i > 0; i -= bambooHeight * 10) {
             const left = this.matter.add.image(0, i, 'bamboo')
-            left.setScale(1, 10)
             left.setCollisionCategory(catWalls);
             left.setStatic(true)
 
             const right = this.matter.add.image(800, i, 'bamboo')
-            right.setScale(1, 10)
             right.setCollisionCategory(catWalls);
             right.setStatic(true)
             walls.push(right)
