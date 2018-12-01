@@ -198,32 +198,12 @@ class TestScene extends Scene {
         this.matter.scene.cameras.main.setBounds(0, 0, 800, gameHeight - 175)
         //var cameraX = (this.character.body.position.x + this.character2.body.position.x) / 2
         var cameraY = (this.character.body.position.y + this.character2.body.position.y) / 2
-        console.log("character pos")
-        console.log(this.matter.scene.cameras.main)
-        this.matter.scene.cameras.main.startFollow(this.character, true, 0.99, 0.99) //player2?
-        this.matter.scene.cameras.main.stopFollow(this.character, true, 0.99, 0.99)
-        //this.matter.scene.cameras.main.startFollow(this.character, true, 0.99, 0.99) //player2?
         const walls = [];
 
-        //const secondMan = this.matter.add.sprite(600, y, 'sumoSheet', 2)                 //player2?
-        //secondMan.setCollisionCategory(catChars)                                //player2?
 
-
-
-
-
-        //const bambooHeight = 2000;
-        //for (let i = y + bambooHeight; i > -10000; i -= bambooHeight) {
-        //    const left = this.matter.add.image(0, i, 'bamboo')
-        //    left.setCollisionCategory(catWalls);
-        //    left.setStatic(true)
-
-        //    const right = this.matter.add.image(800, i, 'bamboo')
-        //    right.setCollisionCategory(catWalls);
-        //    right.setStatic(true)
-        //    walls.push(right)
-        //}
+        // create initial walls
         this.createWalls(0, 1000)
+
 
         const houseSprite = this.matter.add.image(400, - 360, 'house')
         houseSprite.setCollisionCategory(catBackground);
@@ -254,6 +234,12 @@ class TestScene extends Scene {
         this.ballSprite.setCollidesWith([catWalls, catFloor, catBalls, catChars]);
 
 
+        // place camera initialliy
+        this.cameraAnchor = this.matter.add.image(400, 0, 'ball')
+        this.cameraAnchor.setVisible(false)
+        this.matter.scene.cameras.main.startFollow(this.cameraAnchor, true, 0.99, 0.99) //player2?
+        this.matter.scene.cameras.main.stopFollow(this.cameraAnchor, true, 0.99, 0.99)
+
         this.input.keyboard.on("keydown_F", () => {
             console.log(this.character.getBounds(), this.matter.world)
             console.log(this.matter.scene.cameras.main)
@@ -261,7 +247,7 @@ class TestScene extends Scene {
         this.input.keyboard.on("keydown_SPACE", () => {
             // Jump
             if (!this.gameStarted) {
-                this.matter.scene.cameras.main.startFollow(this.character, true, 0.99, 0.99) //player2?
+                this.matter.scene.cameras.main.startFollow(this.cameraAnchor, true, 0.99, 0.99) //player2?
                 this.matter.world.setBounds(0, 0, 800, gameHeight)
                 this.startGame()
             }
@@ -383,6 +369,13 @@ class TestScene extends Scene {
 
         const cam = this.matter.scene.cameras.main
         this.background.setPosition(400, cam._scrollY + viewHeight / 2)
+
+        // TODO Ghandi set camera position
+
+        let cameraYPosition = 0;
+
+        this.cameraAnchor.setPosition(400, this.character.y)
+
 
         if (gameRunning) {
 
