@@ -93,6 +93,10 @@ class TestScene extends Scene {
     }
 
     create () {
+        gameHeight = 1000;
+
+        gameRunning = true;
+        score = 0;
 
         var catChars = this.matter.world.nextCategory();
         var catWalls = this.matter.world.nextCategory();
@@ -203,6 +207,13 @@ class TestScene extends Scene {
                 this.character.setFrame(1)
 
             }
+        })
+        this.input.keyboard.on("keydown_R", () => {
+
+            // Jump
+
+            this.scene.restart("TestScene")
+            console.log(this)
         })
         //this.input.keyboard.on("keydown_UP", () => {
         //    this.character.setScale(2)
@@ -334,7 +345,7 @@ class TestScene extends Scene {
                 this.createWalls(oldGameHeight, gameHeight)
                 this.createClouds(oldGameHeight, gameHeight)
 
-                this.children.bringToTop(this.scene)
+                //this.children.bringToTop(this.scene)
                 this.matter.scene.cameras.main.setBounds(0, -gameHeight - 1000, 800, gameHeight + 1000 - 150 ) 
 
             }
