@@ -149,21 +149,44 @@ class TestScene extends Scene {
 
         //this.background.setCollisionCategory(catBackground)
 
-
-        this.character = this.matter.add.sprite(50, y, 'sumoSheet', 2)
+        //creating player 1 and player 2:
+        this.character = this.matter.add.sprite(200, y, 'sumoSheet', 2)
         this.character.setCircle(50)
         this.character.canJump = true;
-        this.character.setFrictionAir(0)
+        this.character.setFrictionAir(0)  
+        this.character.setMass(20)
+        this.character.setBounce(bounceFactor,bounceFactor)
         this.character.setCollisionCategory(catChars);
+        this.character.setCollidesWith([ catWalls, catFloor, catChars, catBalls]);
+        const char = this.character;
 
+        this.character2 = this.matter.add.sprite(600, y, 'sumoSheet', 2)
+        this.character2.setCircle(50)
+        this.character2.canJump = true;
+        this.character2.setFrictionAir(0)
+        this.character2.setMass(20)
+        this.character2.setBounce(bounceFactor,bounceFactor)
+        this.character2.setCollisionCategory(catChars);
+        this.character2.setCollidesWith([ catWalls, catFloor, catChars, catBalls]);
+        const char2 = this.character2;
+
+<<<<<<< HEAD
+        this.matter.scene.cameras.main.setBounds(0, 0, 800, gameHeight - 175)
+        //var cameraX = (this.character.body.position.x + this.character2.body.position.x) / 2
+        var cameraY = (this.character.body.position.y + this.character2.body.position.y) / 2
+        console.log("character pos")
+        console.log(cameraY)
+        this.matter.scene.cameras.main.startFollow(this.character, true, 0.99, 0.99) //player2?
+=======
 
 
         this.matter.scene.cameras.main.setBounds(0, -10000, 800, 10000 -150 )
         this.matter.scene.cameras.main.startFollow(this.character, true, 0.99, 0.99)
+>>>>>>> 0424aa4b8bd78bbec2a0e98ce53ef523b7e5eeab
         const walls = [];
 
-        const secondMan = this.matter.add.image(600, y, 'sumo')
-        secondMan.setCollisionCategory(catChars)
+        //const secondMan = this.matter.add.sprite(600, y, 'sumoSheet', 2)                 //player2?
+        //secondMan.setCollisionCategory(catChars)                                //player2?
 
 
 
@@ -206,10 +229,16 @@ class TestScene extends Scene {
         this.ballSprite.setIgnoreGravity(true)
         //console.log(this.ballSprite)
         //this.matter.add.circle(50, 500, 10)
+<<<<<<< HEAD
+        console.log(this.character)
+=======
         this.character.setMass(20)
         this.character.setBounce(bounceFactor,bounceFactor)
         //console.log(this.character)
+>>>>>>> 0424aa4b8bd78bbec2a0e98ce53ef523b7e5eeab
         this.ballSprite.setCollisionCategory(catBalls)
+        this.ballSprite.setCollidesWith([catWalls, catFloor, catBalls, catChars]);
+
 
         this.input.keyboard.on("keydown_A", () => {
             console.log(this.character.getBounds(), this.matter.world)
@@ -258,10 +287,10 @@ class TestScene extends Scene {
 
         })
 
-        //setup collision 
-        this.character.setCollidesWith([ catWalls, catFloor, catChars, catBalls]);
-        this.ballSprite.setCollidesWith([catWalls, catFloor, catBalls, catChars]);
-        const char = this.character;
+        //setup collision
+
+
+
 
 
         // why does this.gameOver() fail inside the collision-handler?
@@ -270,10 +299,15 @@ class TestScene extends Scene {
             //console.log(this.walls)
             //console.log('collision', event, bodyA, bodyB)
             //
+<<<<<<< HEAD
+            console.log(event, bodyA, bodyB)
+            if ((bodyA.collisionFilter.category === catWalls ||
+=======
             //console.log(event, bodyA, bodyB)
             if ((bodyA.collisionFilter.category === catWalls || 
+>>>>>>> 0424aa4b8bd78bbec2a0e98ce53ef523b7e5eeab
                 bodyB.collisionFilter.category === catWalls) &&
-                (bodyA.collisionFilter.category === catChars || 
+                (bodyA.collisionFilter.category === catChars ||
                     bodyB.collisionFilter.category === catChars))
             {
                 char.canJump = 2;
@@ -281,9 +315,9 @@ class TestScene extends Scene {
                 char.setFrame(0)
             }
 
-            if ((bodyA.collisionFilter.category === catFloor || 
+            if ((bodyA.collisionFilter.category === catFloor ||
                 bodyB.collisionFilter.category === catFloor) &&
-                (bodyA.collisionFilter.category === catBalls || 
+                (bodyA.collisionFilter.category === catBalls ||
                     bodyB.collisionFilter.category === catBalls))
             {
                 gameOver();
@@ -309,7 +343,11 @@ class TestScene extends Scene {
         gameoverText.setPosition(400, cam._scrollY + viewHeight / 2)
 
         if (gameRunning) {
+<<<<<<< HEAD
+            score = Math.max(score, gameHeight - this.ballSprite.y)
+=======
             score = Math.max(score, -this.ballSprite.y - 500)
+>>>>>>> 0424aa4b8bd78bbec2a0e98ce53ef523b7e5eeab
             //scoreText.setText(score)
             const speed = 8;
             this.character.setAngle(0)
@@ -331,6 +369,7 @@ class TestScene extends Scene {
             if (this.cursors.down.isDown) {
                 if (this.character.body.velocity.y < speed) {
                     this.character.setVelocityY(speed)
+
                 }
                 //this.character.setFlipX(false)
                 //this.character.setFrame(2)
