@@ -376,6 +376,12 @@ class TestScene extends Scene {
         this.infoScreen.setVisible(false)
         this.infoScreenVisible = false
         //console.log(this.background)
+        //
+        this.add.text(270, -300, "ESC for infos", {
+            fontSize: 32,
+            stroke: 'black',
+            strokeThickness: 15
+        });
     }
 
     update() {
