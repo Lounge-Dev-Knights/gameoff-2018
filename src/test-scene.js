@@ -49,20 +49,22 @@ class TestScene extends Scene {
 
     }
     gameOver () {
-        scoreText = this.add.text(32, 24, scoreString + score, {
-            fontSize: 32,
-            stroke: 'black',
-            strokeThickness: 5
-        });
+        if (gameRunning) {
+            scoreText = this.add.text(32, 24, scoreString + score, {
+                fontSize: 32,
+                stroke: 'black',
+                strokeThickness: 5
+            });
 
-        gameoverText = this.add.image(32, 24, 'gameover');
-        gameoverText.visible = false;
+            gameoverText = this.add.image(32, 24, 'gameover');
+            gameoverText.visible = false;
 
-        console.log("gameover")
-        gameRunning = false;
-        scoreText.visible = true;
-        gameoverText.visible = true;
-        scoreText.setText("score: " + Math.round(score, 0));
+            console.log("gameover")
+            gameRunning = false;
+            scoreText.visible = true;
+            gameoverText.visible = true;
+            scoreText.setText("score: " + Math.round(score, 0));
+        }
     }
 
     createWalls(fromHeight, toHeight) {
@@ -327,10 +329,9 @@ class TestScene extends Scene {
 
 
         // why does this.gameOver() fail inside the collision-handler?
-        const gameOver = this.gameOver;
+        const gameOver = this.gameOver.bind(this);
         this.matter.world.on('collisionstart', function (event, bodyA, bodyB) {
             //console.log(this.walls)
-            //console.log('collision', event, bodyA, bodyB)
             //
             //
             if ((bodyA.collisionFilter.category === catWalls ||
@@ -340,12 +341,12 @@ class TestScene extends Scene {
             {
               if(bodyA.collisionFilter.category == catChars){
                 bodyA.gameObject.canJump = 2
-                bodyA.gameObject.setVelocityY(Math.max(0, bodyA.gameObject.velocity.y))
+                bodyA.gameObject.setVelocityY(Math.min(0, bodyA.velocity.y))
                 bodyA.gameObject.setFrame(0)
               }
               else{
                 bodyB.gameObject.canJump = 2
-                bodyB.gameObject.setVelocityY(Math.max(0, bodyB.gameObject.velocity.y))
+                bodyB.gameObject.setVelocityY(Math.min(0, bodyB.velocity.y))
                 bodyB.gameObject.setFrame(0)
               }
             }
@@ -355,6 +356,7 @@ class TestScene extends Scene {
                 (bodyA.collisionFilter.category === catBalls ||
                     bodyB.collisionFilter.category === catBalls))
             {
+            console.log('collision', event, bodyA, bodyB)
                 gameOver();
             }
         })
