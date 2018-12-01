@@ -294,9 +294,9 @@ class TestScene extends Scene {
                 (bodyA.collisionFilter.category === catChars ||
                     bodyB.collisionFilter.category === catChars))
             {
-                char.canJump = 2;
-                char.setVelocityY(0)
-                char.setFrame(0)
+                char1.canJump = 2;
+                char1.setVelocityY(0)
+                char1.setFrame(0)
             }
 
             if ((bodyA.collisionFilter.category === catFloor ||
