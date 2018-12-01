@@ -246,7 +246,7 @@ class TestScene extends Scene {
         gameoverText.setPosition(400, cam._scrollY + viewHeight / 2)
 
         if (gameRunning) {
-            score = Math.max(score, gameHeight - this.ballSprite.y)
+            score = Math.max(score, gameHeight - this.ballSprite.y - 500)
             //scoreText.setText(score)
             const speed = 8;
             this.character.setAngle(0)
