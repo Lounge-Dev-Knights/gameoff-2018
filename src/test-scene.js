@@ -61,7 +61,6 @@ class TestScene extends Scene {
     }
 
     createClouds(fromHeight, toHeight) {
-        console.log("create clouds ", fromHeight, toHeight)
         for (let i = -fromHeight - (Math.random() * 1000); i > -toHeight; i -= (Math.random() * 1000)) {
             const cloud = this.matter.add.image((Math.random() * 1600) - 800, i, 'w' + Math.ceil((Math.random() * 3)))
             cloud.setScale(Math.random() * 2)
@@ -107,7 +106,7 @@ class TestScene extends Scene {
 
         this.cursors = this.input.keyboard.createCursorKeys()
 
-        console.log(this.matter)
+        //console.log(this.matter)
         const y = -100
         this.matter.world.setBounds(0, 0, 800, gameHeight)
 
@@ -181,11 +180,11 @@ class TestScene extends Scene {
         this.ballSprite.setCircle(150 * ballScale)
         this.ballSprite.setMass(1)
         this.ballSprite.setBounce(bounceFactor,bounceFactor)
-        console.log(this.ballSprite)
+        //console.log(this.ballSprite)
         //this.matter.add.circle(50, 500, 10)
         this.character.setMass(20)
         this.character.setBounce(bounceFactor,bounceFactor)
-        console.log(this.character)
+        //console.log(this.character)
         this.ballSprite.setCollisionCategory(catBalls)
 
         this.input.keyboard.on("keydown_A", () => {
@@ -236,7 +235,7 @@ class TestScene extends Scene {
             //console.log(this.walls)
             //console.log('collision', event, bodyA, bodyB)
             //
-            console.log(event, bodyA, bodyB)
+            //console.log(event, bodyA, bodyB)
             if ((bodyA.collisionFilter.category === catWalls || 
                 bodyB.collisionFilter.category === catWalls) &&
                 (bodyA.collisionFilter.category === catChars || 
@@ -265,7 +264,7 @@ class TestScene extends Scene {
         scoreText.visible = false;
         gameoverText = this.add.image(32, 24, 'gameover');
         gameoverText.visible = false;
-        console.log(this.background)
+        //console.log(this.background)
     }
 
     update() {
@@ -331,11 +330,11 @@ class TestScene extends Scene {
             const newGameHeight = -this.ballSprite.y + 1000
             
             if (newGameHeight > gameHeight) {
-                console.log("resizing game")
                 gameHeight = newGameHeight + 1000
                 this.createWalls(oldGameHeight, gameHeight)
                 this.createClouds(oldGameHeight, gameHeight)
 
+                this.children.bringToTop(this.scene)
                 this.matter.scene.cameras.main.setBounds(0, -gameHeight - 1000, 800, gameHeight + 1000 - 150 ) 
 
             }
