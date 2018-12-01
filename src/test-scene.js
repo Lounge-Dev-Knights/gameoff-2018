@@ -20,7 +20,7 @@ import style from '../style/default.css';
 
 const viewHeight = 800;
 
-const gameHeight = 10000;
+let gameHeight = 1000;
 
 let gameRunning = true;
 var score = 0;
@@ -46,6 +46,34 @@ class TestScene extends Scene {
         scoreText.setText("score: " + Math.round(score, 0));
     }
 
+    createWalls(fromHeight, toHeight) {
+        const bambooHeight = 2000;
+        for (let i = -fromHeight; i > -toHeight; i -= bambooHeight) {
+            const left = this.matter.add.image(0, i, 'bamboo')
+            left.setCollisionCategory(this.catWalls);
+            left.setStatic(true)
+
+            const right = this.matter.add.image(800, i, 'bamboo')
+            right.setCollisionCategory(this.catWalls);
+            right.setStatic(true)
+            //walls.push(right)
+        }
+    }
+
+    createClouds(fromHeight, toHeight) {
+        console.log("create clouds ", fromHeight, toHeight)
+        for (let i = -fromHeight - (Math.random() * 1000); i > -toHeight; i -= (Math.random() * 1000)) {
+            const cloud = this.matter.add.image((Math.random() * 1600) - 800, i, 'w' + Math.ceil((Math.random() * 3)))
+            cloud.setScale(Math.random() * 2)
+            cloud.setIgnoreGravity(true)
+            cloud.setCollidesWith([])
+            this.clouds.push({
+                cloud: cloud,
+                direction: (Math.ceil(i) % 3) - 1
+            })
+        }
+    }
+
     preload () {
         this.load.spritesheet('sumoSheet', dudes, { frameWidth: 100, frameHeight: 100})
         this.load.image('sumo', sumo)
@@ -69,6 +97,7 @@ class TestScene extends Scene {
 
         var catChars = this.matter.world.nextCategory();
         var catWalls = this.matter.world.nextCategory();
+        this.catWalls = catWalls;
         var catFloor = this.matter.world.nextCategory();
         var catBalls = this.matter.world.nextCategory();
         var catBackground = this.matter.world.nextCategory();
@@ -79,7 +108,7 @@ class TestScene extends Scene {
         this.cursors = this.input.keyboard.createCursorKeys()
 
         console.log(this.matter)
-        const y = gameHeight - 100
+        const y = -100
         this.matter.world.setBounds(0, 0, 800, gameHeight)
 
 
@@ -89,16 +118,17 @@ class TestScene extends Scene {
         // clouds
         this.clouds = []
 
-        for (let i = y - (Math.random() * 1000); i > 1000; i -= (Math.random() * 1000)) {
-            const cloud = this.matter.add.image((Math.random() * 1600) - 800, i, 'w' + Math.ceil((Math.random() * 3)))
-            cloud.setScale(Math.random() * 2)
-            cloud.setIgnoreGravity(true)
-            cloud.setCollidesWith([])
-            this.clouds.push({
-                cloud: cloud,
-                direction: (Math.ceil(i) % 3) - 1
-            })
-        }
+        this.createClouds(0, gameHeight)
+        //for (let i = y - (Math.random() * 1000); i > 1000; i -= (Math.random() * 1000)) {
+        //    const cloud = this.matter.add.image((Math.random() * 1600) - 800, i, 'w' + Math.ceil((Math.random() * 3)))
+        //    cloud.setScale(Math.random() * 2)
+        //    cloud.setIgnoreGravity(true)
+        //    cloud.setCollidesWith([])
+        //    this.clouds.push({
+        //        cloud: cloud,
+        //        direction: (Math.ceil(i) % 3) - 1
+        //    })
+        //}
 
         //this.background.setCollisionCategory(catBackground)
 
@@ -109,7 +139,9 @@ class TestScene extends Scene {
         this.character.setFrictionAir(0)
         this.character.setCollisionCategory(catChars);
 
-        this.matter.scene.cameras.main.setBounds(0, 0, 800, gameHeight - 175)
+
+
+        this.matter.scene.cameras.main.setBounds(0, -10000, 800, 10000 -150 )
         this.matter.scene.cameras.main.startFollow(this.character, true, 0.99, 0.99)
         const walls = [];
 
@@ -120,29 +152,26 @@ class TestScene extends Scene {
 
 
 
-        const bambooHeight = 52;
-        for (let i = y + bambooHeight; i > 0; i -= bambooHeight * 10) {
-            const left = this.matter.add.image(0, i, 'bamboo')
-            left.setCollisionCategory(catWalls);
-            left.setStatic(true)
+        //const bambooHeight = 2000;
+        //for (let i = y + bambooHeight; i > -10000; i -= bambooHeight) {
+        //    const left = this.matter.add.image(0, i, 'bamboo')
+        //    left.setCollisionCategory(catWalls);
+        //    left.setStatic(true)
 
-            const right = this.matter.add.image(800, i, 'bamboo')
-            right.setCollisionCategory(catWalls);
-            right.setStatic(true)
-            walls.push(right)
-        }
+        //    const right = this.matter.add.image(800, i, 'bamboo')
+        //    right.setCollisionCategory(catWalls);
+        //    right.setStatic(true)
+        //    walls.push(right)
+        //}
+        this.createWalls(0, 1000)
 
-        const houseSprite = this.matter.add.image(400, gameHeight - 365, 'house')
+        const houseSprite = this.matter.add.image(400, - 360, 'house')
         houseSprite.setCollisionCategory(catBackground);
         houseSprite.setStatic(true)
         for (let i = 0; i < 2; i++) {
-            const floor = this.matter.add.image(i * 800, gameHeight, 'boden').setOrigin(0.5, 0.55)
+            const floor = this.matter.add.image(i * 800, 0, 'boden').setOrigin(0.5, 0.55)
             floor.setCollisionCategory(catFloor);
             floor.setStatic(true)
-
-            const ceil = this.matter.add.image(i * 800, 0, 'boden')
-            ceil.setCollisionCategory(catWalls);
-            ceil.setStatic(true)
         }
 
         this.ballSprite = this.matter.add.image(100, y - 400, 'ball')
@@ -246,7 +275,7 @@ class TestScene extends Scene {
         gameoverText.setPosition(400, cam._scrollY + viewHeight / 2)
 
         if (gameRunning) {
-            score = Math.max(score, gameHeight - this.ballSprite.y - 500)
+            score = Math.max(score, -this.ballSprite.y - 500)
             //scoreText.setText(score)
             const speed = 8;
             this.character.setAngle(0)
@@ -294,6 +323,23 @@ class TestScene extends Scene {
             if (this.ballSprite.y > (this.character.y + 500) ) {
                 this.gameOver();
             }
+
+
+            // Check and process map extension if needed 
+            
+            const oldGameHeight = gameHeight
+            const newGameHeight = -this.ballSprite.y + 1000
+            
+            if (newGameHeight > gameHeight) {
+                console.log("resizing game")
+                gameHeight = newGameHeight + 1000
+                this.createWalls(oldGameHeight, gameHeight)
+                this.createClouds(oldGameHeight, gameHeight)
+
+                this.matter.scene.cameras.main.setBounds(0, -gameHeight - 1000, 800, gameHeight + 1000 - 150 ) 
+
+            }
+
         }
 
 
