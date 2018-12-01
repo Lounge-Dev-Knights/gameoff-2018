@@ -21,7 +21,7 @@ import title from '../assets/sumo_raice.png';
 import style from '../style/default.css';
 
 const viewHeight = 800;
-
+const speed = 8;
 let gameHeight = 1000;
 
 let gameRunning = true;
@@ -58,6 +58,7 @@ class TestScene extends Scene {
         gameoverText = this.add.image(32, 24, 'gameover');
         gameoverText.visible = false;
 
+        console.log("gameover")
         gameRunning = false;
         scoreText.visible = true;
         gameoverText.visible = true;
@@ -237,7 +238,7 @@ class TestScene extends Scene {
         this.ballSprite.setCollidesWith([catWalls, catFloor, catBalls, catChars]);
 
 
-        this.input.keyboard.on("keydown_A", () => {
+        this.input.keyboard.on("keydown_F", () => {
             console.log(this.character.getBounds(), this.matter.world)
             console.log(this.matter.scene.cameras.main)
         })
@@ -264,6 +265,41 @@ class TestScene extends Scene {
 
             this.scene.restart("TestScene")
             console.log(this)
+        })
+
+        //Character 2 Keys:
+
+        this.input.keyboard.on("keydown_W", () => {
+            console.log(this.character2.getBounds(), this.matter.world)
+            console.log(this.matter.scene.cameras.main)
+            if (gameRunning && this.character2.canJump > 0) {
+                //this.character.applyForce({x: 0, y: -0.8})
+                this.character2.setVelocityY(-10)
+                // TODO maybe second jump less high
+                //this.character.setVelocityY(-5 * this.character.canJump)
+                this.character2.canJump -= 1;
+                this.character2.setFrame(1)
+            }
+        })
+        this.input.keyboard.on("keydown_A", () => {
+            console.log(this.character2.getBounds(), this.matter.world)
+            console.log(this.matter.scene.cameras.main)
+              if (gameRunning ){
+                this.character2.setVelocityX(-speed)
+                this.character2.setFlipX(true)
+              }
+
+        })
+        this.input.keyboard.on("keydown_S", () => {
+            console.log(this.character2.getBounds(), this.matter.world)
+            console.log(this.matter.scene.cameras.main)
+            this.character2.setVelocityY(speed)
+        })
+        this.input.keyboard.on("keydown_D", () => {
+            console.log(this.character2.getBounds(), this.matter.world)
+            console.log(this.matter.scene.cameras.main)
+            this.character2.setVelocityX(speed)
+            this.character2.setFlipX(false)
         })
         //this.input.keyboard.on("keydown_UP", () => {
         //    this.character.setScale(2)
@@ -302,9 +338,16 @@ class TestScene extends Scene {
                 (bodyA.collisionFilter.category === catChars ||
                     bodyB.collisionFilter.category === catChars))
             {
-                char1.canJump = 2;
-                char1.setVelocityY(0)
-                char1.setFrame(0)
+              if(bodyA.collisionFilter.category == catChars){
+                bodyA.gameObject.canJump = 2
+                bodyA.gameObject.setVelocityY(0)
+                bodyA.gameObject.setFrame(0)
+              }
+              else{
+                bodyB.gameObject.canJump = 2
+                bodyB.gameObject.setVelocityY(0)
+                bodyB.gameObject.setFrame(0)
+              }
             }
 
             if ((bodyA.collisionFilter.category === catFloor ||
@@ -327,12 +370,11 @@ class TestScene extends Scene {
         if (gameRunning) {
             score = Math.max(score, -this.ballSprite.y - 500)
             //scoreText.setText(score)
-            const speed = 8;
-            this.character.setAngle(0)
             //this.background.
-
+            this.character.setAngle(0)
+            this.character2.setAngle(0)
             this.character.setVelocityX(this.character.body.velocity.x * 0.9);
-
+            this.character2.setVelocityX(this.character2.body.velocity.x * 0.9);
             //this.character.setFrame(1)
             if (this.cursors.left.isDown) {
                 this.character.setVelocityX(-speed)
@@ -356,8 +398,6 @@ class TestScene extends Scene {
             }
             if (this.cursors.down.isDown) {
             }
-
-
 
             this.clouds.forEach(cloud => {
                 if (cloud.cloud.x > 800) {
