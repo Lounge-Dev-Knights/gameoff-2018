@@ -14,6 +14,8 @@ import w2 from '../assets/w2.png';
 import w3 from '../assets/w3.png';
 import w4 from '../assets/w4.png';
 import gameover from '../assets/game-over.png';
+import presents from '../assets/BS_presents.png';
+import title from '../assets/sumo_raice.png';
 
 
 import style from '../style/default.css';
@@ -38,6 +40,13 @@ class TestScene extends Scene {
         })
     }
 
+    startGame() {
+        this.presents.setVisible(false)
+        this.title.setVisible(false)
+        this.ballSprite.setIgnoreGravity(false)
+        this.gameStarted = true;
+
+    }
     gameOver () {
         console.log("gameover")
         gameRunning = false;
@@ -87,6 +96,8 @@ class TestScene extends Scene {
         this.load.image('w3', w3)
         this.load.image('w4', w4)
         this.load.image('gameover', gameover)
+        this.load.image('presents', presents)
+        this.load.image('title', title)
 
         //this.player.body.
         //this.load.image('circle', circle);
@@ -95,6 +106,7 @@ class TestScene extends Scene {
     create () {
         gameHeight = 1000;
 
+        this.gameStarted = false;
         gameRunning = true;
         score = 0;
 
@@ -118,6 +130,8 @@ class TestScene extends Scene {
         // set background
         this.background = this.matter.scene.add.image(0, gameHeight, 'background')
         this.background.setScale(1.2)
+
+
         // clouds
         this.clouds = []
 
@@ -177,13 +191,19 @@ class TestScene extends Scene {
             floor.setStatic(true)
         }
 
-        this.ballSprite = this.matter.add.image(100, y - 400, 'ball')
-        const ballScale = 0.5;
+
+        // Title 
+        this.presents = this.matter.scene.add.image(400, -800, 'presents')
+        this.title = this.matter.scene.add.image(400, -450, 'title')
+
+        this.ballSprite = this.matter.add.image(585, y - 432, 'ball')
+        const ballScale = 0.56;
         this.ballSprite.setScale(ballScale)
         const bounceFactor = .8
         this.ballSprite.setCircle(150 * ballScale)
         this.ballSprite.setMass(1)
         this.ballSprite.setBounce(bounceFactor,bounceFactor)
+        this.ballSprite.setIgnoreGravity(true)
         //console.log(this.ballSprite)
         //this.matter.add.circle(50, 500, 10)
         this.character.setMass(20)
@@ -197,6 +217,10 @@ class TestScene extends Scene {
         })
         this.input.keyboard.on("keydown_SPACE", () => {
             // Jump
+            
+            if (!this.gameStarted) {
+                this.startGame()
+            }
 
             if (gameRunning && this.character.canJump > 0) {
                 //this.character.applyForce({x: 0, y: -0.8})
