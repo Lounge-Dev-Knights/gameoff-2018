@@ -340,12 +340,12 @@ class TestScene extends Scene {
             {
               if(bodyA.collisionFilter.category == catChars){
                 bodyA.gameObject.canJump = 2
-                bodyA.gameObject.setVelocityY(0)
+                bodyA.gameObject.setVelocityY(Math.max(0, bodyA.gameObject.velocity.y))
                 bodyA.gameObject.setFrame(0)
               }
               else{
                 bodyB.gameObject.canJump = 2
-                bodyB.gameObject.setVelocityY(0)
+                bodyB.gameObject.setVelocityY(Math.max(0, bodyB.gameObject.velocity.y))
                 bodyB.gameObject.setFrame(0)
               }
             }
