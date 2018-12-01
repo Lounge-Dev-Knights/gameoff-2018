@@ -16,6 +16,7 @@ import w4 from '../assets/w4.png';
 import gameover from '../assets/game-over.png';
 import presents from '../assets/BS_presents.png';
 import title from '../assets/sumo_raice.png';
+import info from '../assets/INFO.png';
 
 
 import style from '../style/default.css';
@@ -118,6 +119,7 @@ class TestScene extends Scene {
         this.load.image('gameover', gameover)
         this.load.image('presents', presents)
         this.load.image('title', title)
+        this.load.image('info', info)
 
         //this.player.body.
         //this.load.image('circle', circle);
@@ -136,6 +138,7 @@ class TestScene extends Scene {
         var catFloor = this.matter.world.nextCategory();
         var catBalls = this.matter.world.nextCategory();
         var catBackground = this.matter.world.nextCategory();
+
 
 
 
@@ -282,6 +285,13 @@ class TestScene extends Scene {
             console.log(this)
         })
 
+        this.input.keyboard.on("keydown_ESC", () => {
+            
+            this.infoScreen.setVisible(!this.infoScreenVisible)
+            this.infoScreenVisible = !this.infoScreenVisible
+            this.children.bringToTop(this.infoScreen)
+        })
+
         //Character 2 Keys:
 
 
@@ -362,6 +372,9 @@ class TestScene extends Scene {
         })
 
 
+        this.infoScreen = this.matter.scene.add.image(400, -400, 'info')
+        this.infoScreen.setVisible(false)
+        this.infoScreenVisible = false
         //console.log(this.background)
     }
 
@@ -369,6 +382,7 @@ class TestScene extends Scene {
 
         const cam = this.matter.scene.cameras.main
         this.background.setPosition(400, cam._scrollY + viewHeight / 2)
+        this.infoScreen.setPosition(400, cam._scrollY + viewHeight / 2)
 
         // TODO Ghandi set camera position
 
